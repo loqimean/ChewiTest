@@ -2,6 +2,15 @@
 
 <h1>Users</h1>
 
+<%= form_with url: users_search_path do |f| %>
+  <div class="container mt-4">
+    <div class="input-group">
+      <%= f.text_field :query, placeholder: 'Search', class: 'form-control rounded' %>
+      <%= f.submit 'search', class: 'btn btn-outline-primary' %>
+    </div>
+  </div>
+<% end %>
+
 <table>
   <thead>
     <tr>
