@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
+    search
     @users = User.all
   end
 
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @users = UsersIndex.query(query_string: { fields: [:name, :email], query: search_params[:query] })
+    @s_users = if search_params[:query] then UsersIndex.query(query_string: { fields: [:name, :email], query: search_params[:query] }) end
   end
 
   private
