@@ -2,37 +2,39 @@
 
 <h1>Users</h1>
 
-<%= form_with url: users_search_path do |f| %>
-  <div class="container mt-4">
-    <div class="input-group">
-      <%= f.text_field :query, placeholder: 'Search', class: 'form-control rounded' %>
-      <%= f.submit 'search', class: 'btn btn-outline-primary' %>
-    </div>
-  </div>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="row">
+  <div class="col-xl-6">
+    <%= form_with url: users_search_path do |f| %>
+      <div class="container mt-4">
+        <div class="input-group">
+          <%= f.text_field :query, placeholder: 'Search', class: 'form-control rounded' %>
+          <%= f.submit 'search', class: 'btn btn-outline-primary' %>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <div class="col-xl-6">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th><%= link_to 'New User', new_user_path %></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-<br>
-
-<%= link_to 'New User', new_user_path %>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= link_to 'Show', user %></td>
+            <td><%= link_to 'Edit', edit_user_path(user) %></td>
+            <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
