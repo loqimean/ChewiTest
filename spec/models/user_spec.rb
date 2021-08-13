@@ -34,5 +34,15 @@ RSpec.describe User, type: :model do
       test_user.name = 'q' * 256
       expect(test_user).not_to be_valid
     end
+
+    it 'email format' do
+      test_user.email = 'test'
+      expect(test_user).not_to be_valid
+    end
+
+    it 'email already been taken' do
+      User.create(name: test_user.name, email: test_user.email)
+      expect(test_user).not_to be_valid
+    end
   end
 end
