@@ -4,15 +4,21 @@
   <div class="row">
     <div class="col-xl-6">
       <h1 class="text-center">Users</h1>
-      <%= form_with method: :get do |f| %>
-        <div class="container mt-4">
-          <div class="input-group">
-            <%= f.text_field :query, placeholder: 'Search', class: 'form-control rounded' %>
-            <%= f.submit 'search', class: 'btn btn-outline-primary' %>
-          </div>
-        </div>
+      <%= form_with url: search_users_path do |form| %>
+
+
+       <div class="container mt-4">
+         <div class="input-group">
+           <%= form.text_field 'query', placeholder: 'Enter search terms...',
+                                                class: 'form-control rounded' %>
+           <%= form.submit 'Search', class: 'btn btn-outline-primary',
+                                                data: { disable_with: false } %>
+         </div>
+       </div>
       <% end %>
-      <%= render 's_user', users: @s_users %>
+
+      <%= render partial: "users/listing" %>
+      
     </div>
     <div class="col-xl-6">
       <table>
