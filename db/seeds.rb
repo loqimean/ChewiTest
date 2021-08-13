@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts 'Start seeding'.green
+
+Chewy.strategy(:atomic) do
+  25.times do
+    user = User.new
+    user.name = Faker::Name.first_name
+    user.email = Faker::Internet.email
+    user.save!
+  end
+end
+
+puts 'Finished seeding'.green
