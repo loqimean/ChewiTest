@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    search
     @users = User.all
   end
 
@@ -57,15 +56,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def search
-    @s_users = if search_params[:query] then UsersIndex.query(query_string: { fields: [:name, :email], query: search_params[:query] }) end
-  end
-
   private
-
-    def search_params
-      params.permit(:query)
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_user
