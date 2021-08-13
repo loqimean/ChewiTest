@@ -2,17 +2,16 @@ require 'rails_helper'
 
 RSpec.describe UsersIndex do
   let!(:test_user) { User.create!(name: 'John', email: 'jo@mail.io') }
+  let(:finded_user) do
+    UsersIndex.query(query_string: {
+      fields: [:name, :email], query: 'John' }).to_a[0]
+  end
 
   before do
     UsersIndex.reset!
   end
 
   context 'when user' do
-    let(:finded_user) do
-      UsersIndex.query(query_string: {
-        fields: [:name, :email], query: 'John' }).to_a[0]
-    end
-
     it 'exists' do
       expect(finded_user).not_to eq(nil)
     end
@@ -24,11 +23,6 @@ RSpec.describe UsersIndex do
   end
 
   context 'when search by name' do
-    let(:finded_user) do
-      UsersIndex.query(query_string: {
-        fields: [:name, :email], query: 'John' }).to_a[0]
-    end
-
     it do
       expect(finded_user.name).to eq('John')
     end
