@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
-    @searched_users = UsersIndex.query(query_string: { query: '' })
   end
 
   # GET /users/1 or /users/1.json
@@ -57,6 +56,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @searched_users = UsersIndex.query(query_string: {
+                                fields: [:name, :email],
+                                query: search_params[:query] })
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          :userListing,
+          partial: 'users/listing',
+          locals: { users: @searched_users }
+        )
+      end
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -67,5 +82,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :email)
+    end
+
+    def search_params
+      params.permit(:query)
     end
 end
