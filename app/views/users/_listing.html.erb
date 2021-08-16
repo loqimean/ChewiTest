@@ -1,5 +1,5 @@
 <table id="userListing" class="table">
-  <% if @searched_users.to_a[0] %>
+  <% if @searched_users.exists? %>
     <thead>
       <tr class="row">
         <th scope="col" class="col-xl-6">Name</th>
@@ -8,7 +8,7 @@
     </thead>
 
     <tbody>
-      <% @searched_users&.each do |user| %>
+      <% @searched_users.each do |user| %>
         <tr class="row">
           <td class="col-xl-6"><%= user.name %></td>
           <td class="col-xl-6"><%= user.email %></td>
