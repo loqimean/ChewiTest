@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>City name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% cities.each do |city| %>
+      <tr>
+        <td><%= city.name + " (#{get_statistic_count_by_aggs(city)})" %></td>
+        <td><%= link_to 'Edit', edit_city_path(city) %></td>
+        <td><%= link_to 'Destroy', city, method: :destroy, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
