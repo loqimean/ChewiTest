@@ -1,8 +1,11 @@
-<div class="container">
+<div class="mx-5">
   <p id="notice"><%= notice %></p>
 
   <div class="row">
-    <div class="col-xl-6">
+    <div class="col-xl-3">
+      <%= render 'cities/all_cities', cities: @cities %>
+    </div>
+    <div class="col-xl-5">
       <h1 class="text-center">Users</h1>
       <%= form_with url: search_users_path do |form| %>
 
@@ -20,7 +23,7 @@
       <%= render "users/listing", users: @searched_users %>
 
     </div>
-    <div class="col-xl-6">
+    <div class="col-xl-4">
       <%= render 'users/all_users', users: @users %>
     </div>
   </div>
