@@ -1,0 +1,24 @@
+<%= form_with(model: object) do |form| %>
+  <% if object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(object.errors.count, "error") %> prohibited this object from being saved:</h2>
+
+      <ul>
+        <% object.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% clean_keys(object).each do |key| %>
+    <div class="field">
+      <%= form.label key %>
+      <%= form.text_field key %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
