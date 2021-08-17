@@ -13,7 +13,7 @@ Chewy.strategy(:atomic) do
     user = User.new
     user.name = Faker::Name.first_name
     user.email = Faker::Internet.email
-    user.city = Faker::Address.city
+    user.country = Faker::Address.country
     user.save!
   end
 end
