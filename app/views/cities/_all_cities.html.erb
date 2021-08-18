@@ -7,11 +7,15 @@
   </thead>
 
   <tbody>
-    <% cities.each do |city| %>
+    <% cities.each do |key, filter| %>
       <tr>
-        <td><%= city.name + " (#{get_statistic_count_by_aggs(city)})" %></td>
+        <% city = City.find(key) %>
+        <td><%= city.name + " (#{filter[:size]})" %></td>
         <td><%= link_to 'Edit', edit_city_path(city) %></td>
-        <td><%= link_to 'Destroy', city, method: :destroy, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', city, method: :delete,
+                                         data: {
+                                           confirm: 'Are you sure?'
+                                         } %></td>
       </tr>
     <% end %>
   </tbody>
