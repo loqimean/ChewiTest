@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
-    @cities = City.all
+    @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
   end
 
   # GET /users/1 or /users/1.json
