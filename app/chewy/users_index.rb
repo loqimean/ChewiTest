@@ -1,6 +1,10 @@
 class UsersIndex < Chewy::Index
   settings analysis: {
     analyzer: {
+      name: {
+        tokenizer: 'keyword',
+        filter: ['lowercase']
+      },
       email: {
         tokenizer: 'keyword',
         filter: ['lowercase']
@@ -9,7 +13,7 @@ class UsersIndex < Chewy::Index
   }
 
   index_scope User
-  field :name, type: :keyword
+  field :name, analyzer: 'name'
   field :email, analyzer: 'email'
   field :city_id, type: 'integer'
 end
