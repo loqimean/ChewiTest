@@ -25,13 +25,22 @@ RSpec.describe UsersIndex do
     end
   end
 
-  context 'when search by name' do
+  context 'when searching by name' do
+    let(:finded_user_in_lowercase) do
+      described_class.query(query_string: {
+        fields: [:name, :email], query: 'john' }).to_a[0]
+    end
+
     it do
       expect(finded_user.name).to eq('John')
     end
+
+    it 'in lowercase' do
+      expect(finded_user_in_lowercase.name).to eq('John')
+    end
   end
 
-  context 'when search by email' do
+  context 'when searching by email' do
     let(:finded_user) do
       described_class.query(query_string: {
         fields: [:name, :email], query: 'jo@mail.io' }).to_a[0]
