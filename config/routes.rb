@@ -6,5 +6,4 @@ Rails.application.routes.draw do
     end
   end
   root 'users#index'
-  resources :users
 end
