@@ -10,10 +10,12 @@ puts 'Start seeding'.green
 
 Chewy.strategy(:atomic) do
   25.times do
-    user = User.new
+    city = City.new
+    city.name = Faker::Address.country
+    user = city.users.build
     user.name = Faker::Name.first_name
     user.email = Faker::Internet.email
-    user.save!
+    city.save!
   end
 end
 

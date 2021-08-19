@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe UsersIndex do
-  let!(:test_user) { User.create!(name: 'John', email: 'jo@mail.io') }
+  let(:test_city) { City.create!(name: 'Kyiv') }
+  let!(:test_user) do
+    User.create!(name: 'John', email: 'jo@mail.io', city: test_city)
+  end
   let(:finded_user) do
-    UsersIndex.query(query_string: {
+    described_class.query(query_string: {
       fields: [:name, :email], query: 'John' }).to_a[0]
   end
 
   before do
-    UsersIndex.reset!
+    described_class.reset!
   end
 
   context 'when user' do
@@ -22,15 +25,24 @@ RSpec.describe UsersIndex do
     end
   end
 
-  context 'when search by name' do
+  context 'when searching by name' do
+    let(:finded_user_in_lowercase) do
+      described_class.query(query_string: {
+        fields: [:name, :email], query: 'john' }).to_a[0]
+    end
+
     it do
       expect(finded_user.name).to eq('John')
     end
+
+    it 'in lowercase' do
+      expect(finded_user_in_lowercase.name).to eq('John')
+    end
   end
 
-  context 'when search by email' do
+  context 'when searching by email' do
     let(:finded_user) do
-      UsersIndex.query(query_string: {
+      described_class.query(query_string: {
         fields: [:name, :email], query: 'jo@mail.io' }).to_a[0]
     end
 

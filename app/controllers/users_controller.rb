@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
+    @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
   end
 
   # GET /users/1 or /users/1.json
@@ -57,9 +58,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @searched_users = UsersIndex.query(query_string: {
-                                fields: [:name, :email],
-                                query: search_params[:query] })
+    @searched_users = collection
 
     respond_to do |format|
       format.turbo_stream do
@@ -86,5 +85,11 @@ class UsersController < ApplicationController
 
     def search_params
       params.permit(:query)
+    end
+
+    def collection
+      UsersSearch.new(
+        query: search_params[:query]
+      ).search
     end
 end

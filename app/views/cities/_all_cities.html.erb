@@ -1,0 +1,17 @@
+<table>
+  <thead>
+    <tr>
+      <th>City name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% cities.each do |key, filter| %>
+      <tr>
+        <% city = City.find(key) %>
+        <td><%= link_to city.name + " (#{filter[:size]})", "?filter_citty_ids=#{filter[:key]}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

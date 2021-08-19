@@ -1,8 +1,7 @@
-<h1>Editing User</h1>
+<h1>Editing City</h1>
 
 <%= turbo_frame_tag "user" do %>
-  <%= render 'shared/form', object: @user %>
+  <%= render 'shared/form', object: @city %>
 
-  <%= link_to 'Show', @user %> |
   <%= link_to 'Back', users_path, data: { "turbo-frame": "_top" } %>
 <% end %>
