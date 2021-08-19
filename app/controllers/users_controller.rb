@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
+    @searched_users = collection
   end
 
   # GET /users/1 or /users/1.json
@@ -89,7 +90,8 @@ class UsersController < ApplicationController
 
     def collection
       UsersSearch.new(
-        query: search_params[:query]
+        query: search_params[:query],
+        filter_cities: cookies['citiesFilterSelected'].tr('[]', '').split(',')
       ).search
     end
 end
