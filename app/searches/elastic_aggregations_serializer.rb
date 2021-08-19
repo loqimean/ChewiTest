@@ -7,16 +7,16 @@ class ElasticAggregationsSerializer
 
   def to_hash
     result = {}
-    aggs.each do |agg_name, agg_data|
-      bucket_rows = buckets(agg_data)
+    aggs['filters'].except('doc_count').each do |filter_name, filter_data|
+      bucket_rows = buckets(filter_data)
 
-      agg_data = bucket_rows.map do |bucket_row|
-        serialize_row(agg_name, bucket_row)
+      filter_data = bucket_rows.map do |bucket_row|
+        serialize_row(filter_name, bucket_row)
       end
 
-      agg_data = as_hash_with_keys(agg_data)
+      filter_data = as_hash_with_keys(filter_data)
 
-      result[agg_name] = agg_data
+      result[filter_name] = filter_data
     end
     result
   end
