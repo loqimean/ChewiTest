@@ -10,12 +10,7 @@
     <% cities.each do |key, filter| %>
       <tr>
         <% city = City.find(key) %>
-        <td><%= city.name + " (#{filter[:size]})" %></td>
-        <td><%= link_to 'Edit', edit_city_path(city) %></td>
-        <td><%= link_to 'Destroy', city, method: :delete,
-                                         data: {
-                                           confirm: 'Are you sure?'
-                                         } %></td>
+        <td><%= link_to city.name + " (#{filter[:size]})", "?filter_citty_ids=#{filter[:key]}" %></td>
       </tr>
     <% end %>
   </tbody>
