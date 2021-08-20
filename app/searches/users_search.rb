@@ -56,9 +56,11 @@ class UsersSearch
       {
         bool: {
           must: [
-            { terms: {
-              "city_id": filter
-            } }
+            {
+              terms: {
+                "city_id": filter
+              }
+            }
           ]
         }
       }
