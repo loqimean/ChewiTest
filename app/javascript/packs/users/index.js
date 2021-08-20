@@ -1,4 +1,4 @@
-const CITIES_FILTER_NAME = 'cityIds';
+const CITIES_FILTER_NAME = 'city_ids';
 
 // For delete element from array using method filter
 let arrayRemove = (arr, value = '') => {
@@ -15,7 +15,7 @@ let citiesFilterStatus = arrayRemove(document.getElementById('cities-filter-stat
                                       .split(','));
 // Create filters object for generating URL
 let filters = {
-  cityIds: citiesFilterStatus
+  city_ids: citiesFilterStatus
 }
 
 cityBoxesList.forEach(cityBox => {

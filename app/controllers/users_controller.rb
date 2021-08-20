@@ -84,11 +84,11 @@ class UsersController < ApplicationController
     end
 
     def search_params
-      params.permit(:query, :cityIds)
+      params.permit(:query, :city_ids)
     end
 
     def parsed_filters_params
-      search_params[:cityIds].to_s.split(',')
+      search_params[:city_ids].to_s.split(',')
     end
 
     def collection
