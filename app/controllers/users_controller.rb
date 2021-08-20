@@ -85,12 +85,12 @@ class UsersController < ApplicationController
     end
 
     def search_params
-      params.permit(:query, :cities_ids)
+      params.permit(:query, :cityIds)
     end
 
     def parsed_filters_params
-      return [] if search_params[:cities_ids].blank?
-      search_params[:cities_ids].split(',')
+      return [] if search_params[:cityIds].blank?
+      search_params[:cityIds].split(',')
     end
 
     def collection
