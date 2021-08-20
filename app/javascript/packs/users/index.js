@@ -26,11 +26,7 @@ cityBoxesList.forEach(cityBox => {
   let cityId = cityCheckbox.value;
 
   // Checks if filters was selected (for saving state after reload page)
-  if (filters[CITIES_FILTER_NAME].includes(cityId)) {
-    cityCheckbox.checked = true;
-  } else {
-    cityCheckbox.checked = false;
-  }
+  cityCheckbox.checked = filters[CITIES_FILTER_NAME].includes(cityId);
 
   cityFilterLink.addEventListener('click', event => {
     // Checks if was filter selected exists or no
