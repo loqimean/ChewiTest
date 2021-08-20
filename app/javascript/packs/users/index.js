@@ -1,11 +1,7 @@
 const CITIES_FILTER_NAME = 'city_ids';
 
 // For delete element from array using method filter
-let arrayRemove = (arr, value = '') => {
-    return arr.filter(ele => {
-        return ele != value;
-    });
-}
+let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
 
 // Get all links for cities filter
 let cityBoxesList = [...document.getElementsByClassName('cities_filter_items')];
