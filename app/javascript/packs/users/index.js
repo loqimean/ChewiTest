@@ -1,43 +1,46 @@
-import { getCookie, addCookie } from '../shared/cookies_manager'
+const CITIES_FILTER_NAME = 'cityIds';
 
-const CITIES_COOKIES_NAME = 'cities_ids';
-
-let each = (elems, fn) => {
-  var i = -1;
-  while(++i < elems.length){
-    fn(elems[i])
-  }
-}
-
-function arrayRemove(arr, value) {
-    return arr.filter(function(ele){
+// For delete element from array using method filter
+let arrayRemove = (arr, value = '') => {
+    return arr.filter(ele => {
         return ele != value;
     });
 }
 
-let citiesLinks = document.getElementsByClassName('cities_filter_items');
-let localCookies = getCookie(CITIES_COOKIES_NAME);
-console.log(localCookies);
-let selectedSitiesIdsCookies = localCookies ? JSON.parse(localCookies) : [];
-console.log(selectedSitiesIdsCookies);
+// Get all links for cities filter
+let cityBoxesList = [...document.getElementsByClassName('cities_filter_items')];
+// Get cities filter status
+let citiesFilterStatus = arrayRemove(document.getElementById('cities-filter-status')
+                                      .getAttribute('data-cities-filter-status')
+                                      .split(','));
+// Create filters object for generating URL
+let filters = {
+  cityIds: citiesFilterStatus
+}
 
-each(citiesLinks, cities_filter_link => {
-  let cityCheckbox = cities_filter_link.lastElementChild.firstElementChild;
+cityBoxesList.forEach(cityBox => {
+  // Gets city link
+  let cityFilterLink = cityBox.parentElement;
+  // Gets city checkboxds
+  let cityCheckbox = cityBox.firstElementChild;
+  let cityId = cityCheckbox.value;
 
-  cities_filter_link.addEventListener('click', event => {
-    let cityCheckbox = cities_filter_link.lastElementChild.firstElementChild;
-    let localCookies = getCookie(CITIES_COOKIES_NAME);
-    let selectedSitiesIdsCookies = localCookies ? JSON.parse(localCookies) : [];
-    let cityId = parseInt(cityCheckbox.value);
+  // Checks if filters was selected (for saving state after reload page)
+  if (filters[CITIES_FILTER_NAME].includes(cityId)) {
+    cityCheckbox.checked = true;
+  } else {
+    cityCheckbox.checked = false;
+  }
 
-    if (selectedSitiesIdsCookies.includes(cityId)) {
-      selectedSitiesIdsCookies = arrayRemove(selectedSitiesIdsCookies, cityId);
+  cityFilterLink.addEventListener('click', event => {
+    // Checks if was filter selected exists or no
+    if (filters[CITIES_FILTER_NAME].includes(cityId)) {
+      filters[CITIES_FILTER_NAME] = arrayRemove(filters[CITIES_FILTER_NAME], cityId);
     } else {
-      selectedSitiesIdsCookies.push(cityId);
+      filters[CITIES_FILTER_NAME].push(cityId);
     }
 
-    addCookie(CITIES_COOKIES_NAME, selectedSitiesIdsCookies);
-
-    cities_filter_link.href = `?${CITIES_COOKIES_NAME}=${selectedSitiesIdsCookies}`;
+    // Generate link with filter params
+    cityFilterLink.href = `?${CITIES_FILTER_NAME}=${filters[CITIES_FILTER_NAME]}`;
   });
 });
