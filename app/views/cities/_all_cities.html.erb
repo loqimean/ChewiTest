@@ -7,6 +7,7 @@
   </thead>
 
   <tbody>
+    <span id="cities-filter-status" data-cities-filter-status=<%= params[:cities_ids] %> disabled></span>
     <% cities.each do |key, filter| %>
       <tr>
         <td><%= link_to '', class: 'cities_filter_items',
@@ -21,5 +22,8 @@
         <% end %></td>
       </tr>
     <% end %>
+    <tr>
+      <td><%= link_to 'Test params', '' %></td>
+    </tr>
   </tbody>
 </table>

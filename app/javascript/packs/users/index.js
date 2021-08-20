@@ -1,6 +1,6 @@
 import { getCookie, addCookie } from '../shared/cookies_manager'
 
-const COOKIES_NAME = 'citiesFilterSelected';
+const CITIES_COOKIES_NAME = 'cities_ids';
 
 let each = (elems, fn) => {
   var i = -1;
@@ -16,7 +16,7 @@ function arrayRemove(arr, value) {
 }
 
 let citiesLinks = document.getElementsByClassName('cities_filter_items');
-let localCookies = getCookie(COOKIES_NAME);
+let localCookies = getCookie(CITIES_COOKIES_NAME);
 console.log(localCookies);
 let selectedSitiesIdsCookies = localCookies ? JSON.parse(localCookies) : [];
 console.log(selectedSitiesIdsCookies);
@@ -24,14 +24,9 @@ console.log(selectedSitiesIdsCookies);
 each(citiesLinks, cities_filter_link => {
   let cityCheckbox = cities_filter_link.lastElementChild.firstElementChild;
 
-  if (selectedSitiesIdsCookies.includes(parseInt(cityCheckbox.value))) {
-    cityCheckbox.checked = true;
-  } else {
-    cityCheckbox.checked = false;
-  }
   cities_filter_link.addEventListener('click', event => {
     let cityCheckbox = cities_filter_link.lastElementChild.firstElementChild;
-    let localCookies = getCookie(COOKIES_NAME);
+    let localCookies = getCookie(CITIES_COOKIES_NAME);
     let selectedSitiesIdsCookies = localCookies ? JSON.parse(localCookies) : [];
     let cityId = parseInt(cityCheckbox.value);
 
@@ -41,10 +36,8 @@ each(citiesLinks, cities_filter_link => {
       selectedSitiesIdsCookies.push(cityId);
     }
 
-    addCookie(COOKIES_NAME, selectedSitiesIdsCookies);
+    addCookie(CITIES_COOKIES_NAME, selectedSitiesIdsCookies);
 
-    console.log(cities_filter_link.href);
-
-    cityCheckbox.checked = true;
+    cities_filter_link.href = `?${CITIES_COOKIES_NAME}=${selectedSitiesIdsCookies}`;
   });
 });

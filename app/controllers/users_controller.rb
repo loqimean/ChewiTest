@@ -85,13 +85,18 @@ class UsersController < ApplicationController
     end
 
     def search_params
-      params.permit(:query)
+      params.permit(:query, :cities_ids)
+    end
+
+    def parsed_filters_params
+      return [] if search_params[:cities_ids].blank?
+      search_params[:cities_ids].split(',')
     end
 
     def collection
       UsersSearch.new(
         query: search_params[:query],
-        filter_cities: cookies['citiesFilterSelected'].tr('[]', '').split(',')
+        filter_cities: parsed_filters_params
       ).search
     end
 end
