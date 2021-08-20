@@ -10,7 +10,8 @@ class UsersSearch
 
   def search
     chewy_index
-      .query(query_condition).limit(FILTER_SIZE)
+      .query(query_condition)
+      .limit(FILTER_SIZE)
       .aggs(aggregation_condition)
       .filter(filter_condition)
   end
