@@ -5,6 +5,7 @@
     <div class="col-xl-5">
       <span disabled id="cities-filter-status" data-cities-filter-status='<%= params[:city_ids] %>'></span>
       <%= render 'cities/all_cities', cities: @filters['cities'] %>
+      <%= render 'users/seniorities', seniorities: @filters['seniorities'] %>
     </div>
     <div class="col-xl-7">
       <h1 class="text-center">Users</h1>
