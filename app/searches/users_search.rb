@@ -60,15 +60,30 @@ class UsersSearch
     def filter_condition
       return {} if filter[:cities].blank?
 
+      bool_must_template(filter_terms.values)
+    end
+
+    def terms_template(key, value)
+      return unless value.present?
+
+      {
+        terms: {
+          key => value
+        }
+      }
+    end
+
+    def filter_terms
+      {
+        cities: terms_template("city_id", filter[:cities]),
+        seniorities: terms_template('seniority', filter[:seniorities])
+      }
+    end
+
+    def bool_must_template(filters)
       {
         bool: {
-          must: [
-            {
-              terms: {
-                "city_id": filter[:cities]
-              }
-            }
-          ]
+          must: filters.compact
         }
       }
     end
