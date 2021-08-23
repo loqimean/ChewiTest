@@ -5,7 +5,7 @@ class UsersSearch
 
   def initialize(args = {})
     @query = args[:query]
-    @filter = args[:filter_cities]
+    @filter = {cities: args[:filter_cities], seniorities: args[:filter_seniorities]}
   end
 
   def search
@@ -29,7 +29,13 @@ class UsersSearch
           aggs: {
             cities: {
               terms: {
-                field: "city_id",
+                field: 'city_id',
+                size: FILTER_SIZE
+              }
+            },
+            seniorities: {
+              terms: {
+                field: 'seniority',
                 size: FILTER_SIZE
               }
             }
@@ -45,21 +51,21 @@ class UsersSearch
 
       {
         query_string: {
-          fields: [:name, :email],
+          fields: [:name, :email, :seniorities],
           query: query
         }
       }
     end
 
     def filter_condition
-      return {} if filter.blank?
+      return {} if filter[:cities].blank?
 
       {
         bool: {
           must: [
             {
               terms: {
-                "city_id": filter
+                "city_id": filter[:cities]
               }
             }
           ]
