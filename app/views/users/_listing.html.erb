@@ -2,16 +2,18 @@
   <% if users&.exists? %>
     <thead>
       <tr class="row">
-        <th scope="col" class="col-xl-6">Name</th>
-        <th scope="col" class="col-xl-6">Email</th>
+        <th scope="col" class="col-xl-4">Name</th>
+        <th scope="col" class="col-xl-4">Email</th>
+        <th scope="col" class="col-xl-4">Seniority</th>
       </tr>
     </thead>
 
     <tbody>
       <% users.each do |user| %>
         <tr class="row">
-          <td class="col-xl-6"><%= user.name %></td>
-          <td class="col-xl-6"><%= user.email %></td>
+          <td class="col-xl-4"><%= user.name %></td>
+          <td class="col-xl-4"><%= user.email %></td>
+          <td class="col-xl-4"><%= user.seniority %></td>
         </tr>
       <% end %>
 
