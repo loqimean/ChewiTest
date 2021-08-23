@@ -15,6 +15,7 @@ Chewy.strategy(:atomic) do
     user = city.users.build
     user.name = Faker::Name.first_name
     user.email = Faker::Internet.email
+    user.seniority = Faker::Job.seniority
     city.save!
   end
 end
