@@ -87,8 +87,8 @@ class UsersController < ApplicationController
       params.permit(:query, :city_ids, :seniorities)
     end
 
-    def parsed_filters_params(params)
-      params.to_s.split(',')
+    def parsed_filters_params(parameters)
+      parameters.to_s.split(',')
     end
 
     def collection
