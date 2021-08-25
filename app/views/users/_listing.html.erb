@@ -1,22 +1,14 @@
 <div id="userListing">
   <% if users&.exists? %>
     <div class="row users-header py-2">
-      <div class="col-xl-3">
-        <span>Name</span>
-      </div>
-      <div class="col-xl-3">
-        <span>Email</span>
-      </div>
-      <div class="col-xl-3">
-        <span>Seniority</span>
-      </div>
-      <div class="col-xl-3">
-        <span>City</span>
-      </div>
+      <span class="col-xl-3">Name</span>
+      <span class="col-xl-3">Email</span>
+      <span class="col-xl-3">Seniority</span>
+      <span class="col-xl-3">City</span>
       <hr class="mt-1 mb-0">
     </div>
     <% users.each do |user| %>
-      <div class="row my-1 users-details">
+      <div class="row my-1 users-details mb-1">
         <span class="col-xl-3"><%= user.name %></span>
         <span class="col-xl-3"><%= user.email %></span>
         <span class="col-xl-3"><%= user.seniority %></span>

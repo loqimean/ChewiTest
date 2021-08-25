@@ -1,13 +1,17 @@
-.form-check {
-  margin: 0 10px;
-}
-
-.form-check-label {
-  font-size: 13px;
-}
-
 .filter {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+
+  h6 {
+    margin: 2px;
+  }
+
+  .form-check {
+    margin: 0 10px;
+
+    .form-check-label {
+      font-size: 13px;
+    }
+  }
 }
 
 .users-header {
