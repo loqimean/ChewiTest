@@ -13,7 +13,7 @@ class UsersSearch
       .query(query_condition)
       .limit(FILTER_SIZE)
       .aggs(aggregation_condition)
-      .filter(filter_condition)
+      .post_filter(filter_condition)
   end
 
   private
@@ -25,21 +25,12 @@ class UsersSearch
     def aggregation_condition
       {
         seniorities: {
-          terms: {
-            field: 'seniority',
-            size: FILTER_SIZE
-          }
+          filter: bool_must_template(filter_terms.except(:seniorities).values),
+          aggs: aggs_available_template('seniority')
         },
-        filters: {
-          global: {},
-          aggs: {
-            cities: {
-              terms: {
-                field: 'city_id',
-                size: FILTER_SIZE
-              }
-            }
-          }
+        cities: {
+          filter: bool_must_template(filter_terms.except(:cities).values),
+          aggs: aggs_available_template('city_id')
         }
       }
     end
@@ -58,7 +49,7 @@ class UsersSearch
     end
 
     def filter_condition
-      return {} if filter[:cities].blank?
+      return {} if filter[:cities].blank? and filter[:seniorities].blank?
 
       bool_must_template(filter_terms.values)
     end
@@ -84,6 +75,17 @@ class UsersSearch
       {
         bool: {
           must: filters.compact
+        }
+      }
+    end
+
+    def aggs_available_template(field)
+      {
+        available: {
+          terms: {
+            field: field,
+            size: FILTER_SIZE
+          }
         }
       }
     end
