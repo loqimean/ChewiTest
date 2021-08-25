@@ -2,18 +2,20 @@
   <% if users&.exists? %>
     <thead>
       <tr class="row">
-        <th scope="col" class="col-xl-4">Name</th>
-        <th scope="col" class="col-xl-4">Email</th>
-        <th scope="col" class="col-xl-4">Seniority</th>
+        <th scope="col" class="col-xl-3">Name</th>
+        <th scope="col" class="col-xl-3">Email</th>
+        <th scope="col" class="col-xl-3">Seniority</th>
+        <th scope="col" class="col-xl-3">City</th>
       </tr>
     </thead>
 
     <tbody>
       <% users.each do |user| %>
         <tr class="row">
-          <td class="col-xl-4"><%= user.name %></td>
-          <td class="col-xl-4"><%= user.email %></td>
-          <td class="col-xl-4"><%= user.seniority %></td>
+          <td class="col-xl-3"><%= user.name %></td>
+          <td class="col-xl-3"><%= user.email %></td>
+          <td class="col-xl-3"><%= user.seniority %></td>
+          <td class="col-xl-3"><%= City.find(user.city_id).name %></td>
         </tr>
       <% end %>
 
