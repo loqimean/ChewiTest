@@ -2,13 +2,13 @@
   <p id="notice"><%= notice %></p>
 
   <div class="row">
-    <div class="col-xl-5">
+    <div class="col-xl-3">
       <span disabled id="cities-filter-status" data-filter-status='<%= params[:city_ids] %>'></span>
       <span disabled id="seniorities-filter-status" data-filter-status='<%= params[:seniorities] %>'></span>
       <%= render 'cities/all_cities', cities: @filters['cities'] %>
       <%= render 'users/seniorities', seniorities: @filters['seniorities'] %>
     </div>
-    <div class="col-xl-7">
+    <div class="col-xl-9">
       <h1 class="text-center">Users</h1>
       <%= form_with url: search_users_path do |form| %>
 

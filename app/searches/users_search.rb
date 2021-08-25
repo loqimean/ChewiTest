@@ -24,18 +24,18 @@ class UsersSearch
 
     def aggregation_condition
       {
+        seniorities: {
+          terms: {
+            field: 'seniority',
+            size: FILTER_SIZE
+          }
+        },
         filters: {
           global: {},
           aggs: {
             cities: {
               terms: {
                 field: 'city_id',
-                size: FILTER_SIZE
-              }
-            },
-            seniorities: {
-              terms: {
-                field: 'seniority',
                 size: FILTER_SIZE
               }
             }
@@ -51,7 +51,7 @@ class UsersSearch
 
       {
         query_string: {
-          fields: [:name, :email, :seniorities],
+          fields: [:name, :email],
           query: query
         }
       }
@@ -75,7 +75,7 @@ class UsersSearch
 
     def filter_terms
       {
-        cities: terms_template("city_id", filter[:cities]),
+        cities: terms_template('city_id', filter[:cities]),
         seniorities: terms_template('seniority', filter[:seniorities])
       }
     end
