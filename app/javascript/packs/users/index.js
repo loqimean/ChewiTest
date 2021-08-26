@@ -1,38 +1,54 @@
 const CITIES_FILTER_NAME = 'city_ids';
+const SENIORITIES_FILTER_NAME = 'seniorities';
 
 // For delete element from array using method filter
 let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
 
-// Get all links for cities filter
-let cityBoxesList = [...document.getElementsByClassName('cities_filter_items')];
-// Get cities filter status
-let citiesFilterStatus = arrayRemove(document.getElementById('cities-filter-status')
-                                      .getAttribute('data-cities-filter-status')
-                                      .split(','));
-// Create filters object for generating URL
-let filters = {
-  city_ids: citiesFilterStatus
+let generateParams = obj => {
+  let params = new URLSearchParams(document.location.search.substring(1));
+
+  for (const key in obj) {
+    obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
+  }
+  document.location.search = params.toString();
 }
 
-cityBoxesList.forEach(cityBox => {
-  // Gets city link
-  let cityFilterLink = cityBox.parentElement;
-  // Gets city checkboxds
-  let cityCheckbox = cityBox.firstElementChild;
-  let cityId = cityCheckbox.value;
+let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
+  itemBoxesList.forEach(itemBox => {
+    let itemFilterLink = itemBox.parentElement;
+    let itemCheckbox = itemBox.firstElementChild;
+    let itemName = itemCheckbox.value;
 
-  // Checks if filters was selected (for saving state after reload page)
-  cityCheckbox.checked = filters[CITIES_FILTER_NAME].includes(cityId);
+    // Checks if filters was selected (for saving state after reload page)
+    itemCheckbox.checked = filtersBacket[filterName].includes(itemName);
 
-  cityFilterLink.addEventListener('click', event => {
-    // Checks if was filter selected exists or no
-    if (filters[CITIES_FILTER_NAME].includes(cityId)) {
-      filters[CITIES_FILTER_NAME] = arrayRemove(filters[CITIES_FILTER_NAME], cityId);
-    } else {
-      filters[CITIES_FILTER_NAME].push(cityId);
-    }
+    itemFilterLink.addEventListener('click', event => {
+      // Checks if was filter selected exists or no
+      if (filtersBacket[filterName].includes(itemName)) {
+        filtersBacket[filterName] = arrayRemove(filtersBacket[filterName], itemName);
+      } else {
+        filtersBacket[filterName].push(itemName);
+      }
 
-    // Generate link with filter params
-    cityFilterLink.href = `?${CITIES_FILTER_NAME}=${filters[CITIES_FILTER_NAME]}`;
+      // Generate link with filter params
+      generateParams(filtersBacket);
+    });
   });
-});
+}
+
+
+let cityBoxesList = [...document.getElementsByClassName('city_filter_items')];
+let seniorityBoxesList = [...document.getElementsByClassName('seniority_filter_items')];
+let citiesFilterStatus = arrayRemove(document.getElementById('cities-filter-status')
+                                      .getAttribute('data-filter-status')
+                                      .split(','));
+let senioritiesFilterStatus = arrayRemove(document.getElementById('seniorities-filter-status')
+                                      .getAttribute('data-filter-status')
+                                      .split(','));
+let filters = {
+  city_ids: citiesFilterStatus,
+  seniorities: senioritiesFilterStatus
+}
+
+addFollowByFilters(cityBoxesList, filters, CITIES_FILTER_NAME);
+addFollowByFilters(seniorityBoxesList, filters, SENIORITIES_FILTER_NAME);

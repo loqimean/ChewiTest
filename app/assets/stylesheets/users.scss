@@ -1,3 +1,23 @@
-.form-check {
-  cursor: pointer;
+.filter {
+  margin-bottom: 15px;
+
+  h6 {
+    margin: 2px;
+  }
+
+  .form-check {
+    margin: 0 10px;
+
+    .form-check-label {
+      font-size: 13px;
+    }
+  }
+}
+
+.users-header {
+  font-weight: bold;
+}
+
+.users-details {
+  font-size: 14px;
 }

@@ -5,7 +5,7 @@ class UsersSearch
 
   def initialize(args = {})
     @query = args[:query]
-    @filter = args[:filter_cities]
+    @filter = {cities: args[:filter_cities], seniorities: args[:filter_seniorities]}
   end
 
   def search
@@ -13,7 +13,7 @@ class UsersSearch
       .query(query_condition)
       .limit(FILTER_SIZE)
       .aggs(aggregation_condition)
-      .filter(filter_condition)
+      .post_filter(filter_condition)
   end
 
   private
@@ -24,16 +24,13 @@ class UsersSearch
 
     def aggregation_condition
       {
-        filters: {
-          global: {},
-          aggs: {
-            cities: {
-              terms: {
-                field: "city_id",
-                size: FILTER_SIZE
-              }
-            }
-          }
+        seniorities: {
+          filter: bool_must_template(filter_terms.except(:seniorities).values),
+          aggs: aggs_available_template('seniority')
+        },
+        cities: {
+          filter: bool_must_template(filter_terms.except(:cities).values),
+          aggs: aggs_available_template('city_id')
         }
       }
     end
@@ -52,17 +49,43 @@ class UsersSearch
     end
 
     def filter_condition
-      return {} if filter.blank?
+      return {} if filter[:cities].blank? and filter[:seniorities].blank?
+
+      bool_must_template(filter_terms.values)
+    end
+
+    def terms_template(key, value)
+      return unless value.present?
 
       {
+        terms: {
+          key => value
+        }
+      }
+    end
+
+    def filter_terms
+      {
+        cities: terms_template('city_id', filter[:cities]),
+        seniorities: terms_template('seniority', filter[:seniorities])
+      }
+    end
+
+    def bool_must_template(filters)
+      {
         bool: {
-          must: [
-            {
-              terms: {
-                "city_id": filter
-              }
-            }
-          ]
+          must: filters.compact
+        }
+      }
+    end
+
+    def aggs_available_template(field)
+      {
+        available: {
+          terms: {
+            field: field,
+            size: FILTER_SIZE
+          }
         }
       }
     end
