@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
     @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
+    @users = collection
   end
 
   # GET /users/1 or /users/1.json
@@ -58,14 +58,14 @@ class UsersController < ApplicationController
   end
 
   def search
-    @searched_users = collection
+    @users = collection
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           :userListing,
           partial: 'users/listing',
-          locals: { users: @searched_users }
+          locals: { users: @users }
         )
       end
     end
@@ -84,12 +84,17 @@ class UsersController < ApplicationController
     end
 
     def search_params
-      params.permit(:query)
+      params.permit(:query, :city_ids)
+    end
+
+    def parsed_filters_params
+      search_params[:city_ids].to_s.split(',')
     end
 
     def collection
       UsersSearch.new(
-        query: search_params[:query]
+        query: search_params[:query],
+        filter_cities: parsed_filters_params
       ).search
     end
 end

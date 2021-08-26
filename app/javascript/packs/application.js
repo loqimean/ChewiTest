@@ -5,6 +5,7 @@
 
 import Rails from "@rails/ujs"
 import "@hotwired/turbo-rails"
+import "@hotwired/stimulus"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 

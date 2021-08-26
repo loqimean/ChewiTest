@@ -2,10 +2,11 @@
   <p id="notice"><%= notice %></p>
 
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-5">
+      <span disabled id="cities-filter-status" data-cities-filter-status='<%= params[:city_ids] %>'></span>
       <%= render 'cities/all_cities', cities: @filters['cities'] %>
     </div>
-    <div class="col-xl-5">
+    <div class="col-xl-7">
       <h1 class="text-center">Users</h1>
       <%= form_with url: search_users_path do |form| %>
 
@@ -20,11 +21,10 @@
        </div>
       <% end %>
 
-      <%= render "users/listing", users: @searched_users %>
+      <%= render "users/listing", users: @users %>
 
-    </div>
-    <div class="col-xl-4">
-      <%= render 'users/all_users', users: @users %>
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag 'users/index' %>
