@@ -4,7 +4,7 @@ const SENIORITIES_FILTER_NAME = 'seniorities';
 // For delete element from array using method filter
 let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
 
-let generateLink = obj => {
+let generateParams = obj => {
   let params = new URLSearchParams(document.location.search.substring(1));
 
   for (const key in obj) {
@@ -45,7 +45,7 @@ cityBoxesList.forEach(cityBox => {
     }
 
     // Generate link with filter params
-    generateLink(filters);
+    generateParams(filters);
   });
 });
 
@@ -70,6 +70,6 @@ seniorityBoxesList.forEach(seniorityBox => {
     }
 
     // Generate link with filter params
-    generateLink(filters);
+    generateParams(filters);
   });
 });
