@@ -1,13 +1,12 @@
 import { Controller } from 'stimulus'
 
+const LIMIT_SHOW_VALUE = 5
+
 export default class extends Controller {
   static targets = [ "item", "lessControl", "moreControl" ]
-  get limitShowValue() {
-    return 5
-  }
 
   connect() {
-    if (this.itemTargets.length > this.limitShowValue){
+    if (this.itemTargets.length > LIMIT_SHOW_VALUE){
       this.drawItems(true)
     } else {
       this.moreControlTarget.hidden = true
@@ -25,7 +24,7 @@ export default class extends Controller {
 
   drawItems(state) {
     this.itemTargets.forEach((element, index) => {
-      if (index >= this.limitShowValue) {
+      if (index >= LIMIT_SHOW_VALUE) {
         element.hidden = state
       }
     })

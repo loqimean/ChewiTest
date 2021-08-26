@@ -2,17 +2,21 @@
   <h6>City name</h6>
   <div data-controller='show-more-less'>
     <% cities.each do |key, filter| %>
-      <%= link_to '', data: { disable_with: false } do %>
-        <div class="form-check city_filter_items" data-show-more-less-target='item'>
-          <input class="form-check-input" type="checkbox" value="<%= key %>"
-                                      id="flexCheckIndeterminate-<%= key %>">
-          <label class="form-check-label" for="flexCheckIndeterminate-<%= key %>">
-            <%= City.find(key).name + " (#{filter[:size]})" %>
-          </label>
-        </div>
-      <% end %>
+      <div class="form-check city_filter_items" data-show-more-less-target='item'>
+        <input class="form-check-input" type="checkbox" value="<%= key %>"
+                                    id="flexCheckIndeterminate-<%= key %>">
+        <label class="form-check-label" for="flexCheckIndeterminate-<%= key %>">
+          <%= City.find(key).name + " (#{filter[:size]})" %>
+        </label>
+      </div>
     <% end %>
-    <button type="button" name="button" data-action='show-more-less#showLess' data-show-more-less-target='lessControl' class='showMoreLessButton'>Show less ↑</button>
-    <button type="button" name="button" data-action='show-more-less#showMore' data-show-more-less-target='moreControl' class='showMoreLessButton'>Show more ↓</button>
+    <button type="button" name="button"
+            data-action='show-more-less#showLess'
+            data-show-more-less-target='lessControl'
+            class='show-more-less-button'>Show less ↑</button>
+    <button type="button" name="button"
+            data-action='show-more-less#showMore'
+            data-show-more-less-target='moreControl'
+            class='show-more-less-button'>Show more ↓</button>
   </div>
 </div>

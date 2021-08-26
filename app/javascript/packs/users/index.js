@@ -5,17 +5,17 @@ const SENIORITIES_FILTER_NAME = 'seniorities';
 let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
 
 let generateParams = obj => {
-  let params = new URLSearchParams(document.location.search.substring(1));
+  let params = new URLSearchParams(document.location.search);
 
   for (const key in obj) {
     obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
   }
-  document.location.search = params.toString();
+  location.search = params.toString();
 }
 
 let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
   itemBoxesList.forEach(itemBox => {
-    let itemFilterLink = itemBox.parentElement;
+    let itemFilterLink = itemBox;
     let itemCheckbox = itemBox.firstElementChild;
     let itemName = itemCheckbox.value;
 
