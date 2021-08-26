@@ -3,13 +3,14 @@ const SENIORITIES_FILTER_NAME = 'seniorities';
 
 // For delete element from array using method filter
 let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
-let generateLink = obj => {
-  let url = '?';
 
-  for( const key in obj) {
-    url += (obj[key].length > 0 ? key + '=' + obj[key] + '&' : '');
+let generateLink = obj => {
+  let params = new URLSearchParams(document.location.search.substring(1));
+
+  for (const key in obj) {
+    obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
   }
-  return url
+  document.location.search = params.toString();
 }
 
 let cityBoxesList = [...document.getElementsByClassName('city_filter_items')];
@@ -44,7 +45,7 @@ cityBoxesList.forEach(cityBox => {
     }
 
     // Generate link with filter params
-    cityFilterLink.href = generateLink(filters);
+    generateLink(filters);
   });
 });
 
@@ -69,6 +70,6 @@ seniorityBoxesList.forEach(seniorityBox => {
     }
 
     // Generate link with filter params
-    seniorityFilterLink.href = generateLink(filters);
+    generateLink(filters);
   });
 });
