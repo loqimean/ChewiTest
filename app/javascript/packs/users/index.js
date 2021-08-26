@@ -13,6 +13,30 @@ let generateParams = obj => {
   document.location.search = params.toString();
 }
 
+let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
+  itemBoxesList.forEach(itemBox => {
+    let itemFilterLink = itemBox.parentElement;
+    let itemCheckbox = itemBox.firstElementChild;
+    let itemName = itemCheckbox.value;
+
+    // Checks if filters was selected (for saving state after reload page)
+    itemCheckbox.checked = filtersBacket[filterName].includes(itemName);
+
+    itemFilterLink.addEventListener('click', event => {
+      // Checks if was filter selected exists or no
+      if (filtersBacket[filterName].includes(itemName)) {
+        filtersBacket[filterName] = arrayRemove(filtersBacket[filterName], itemName);
+      } else {
+        filtersBacket[filterName].push(itemName);
+      }
+
+      // Generate link with filter params
+      generateParams(filtersBacket);
+    });
+  });
+}
+
+
 let cityBoxesList = [...document.getElementsByClassName('city_filter_items')];
 let seniorityBoxesList = [...document.getElementsByClassName('seniority_filter_items')];
 let citiesFilterStatus = arrayRemove(document.getElementById('cities-filter-status')
@@ -26,48 +50,5 @@ let filters = {
   seniorities: senioritiesFilterStatus
 }
 
-cityBoxesList.forEach(cityBox => {
-  // Gets city link
-  let cityFilterLink = cityBox.parentElement;
-  // Gets city checkboxds
-  let cityCheckbox = cityBox.firstElementChild;
-  let cityId = cityCheckbox.value;
-
-  // Checks if filters was selected (for saving state after reload page)
-  cityCheckbox.checked = filters[CITIES_FILTER_NAME].includes(cityId);
-
-  cityFilterLink.addEventListener('click', event => {
-    // Checks if was filter selected exists or no
-    if (filters[CITIES_FILTER_NAME].includes(cityId)) {
-      filters[CITIES_FILTER_NAME] = arrayRemove(filters[CITIES_FILTER_NAME], cityId);
-    } else {
-      filters[CITIES_FILTER_NAME].push(cityId);
-    }
-
-    // Generate link with filter params
-    generateParams(filters);
-  });
-});
-
-seniorityBoxesList.forEach(seniorityBox => {
-  // Gets city link
-  let seniorityFilterLink = seniorityBox.parentElement;
-  // Gets city checkboxds
-  let seniorityCheckbox = seniorityBox.firstElementChild;
-  let seniorityName = seniorityCheckbox.value;
-
-  // Checks if filters was selected (for saving state after reload page)
-  seniorityCheckbox.checked = filters[SENIORITIES_FILTER_NAME].includes(seniorityName);
-
-  seniorityFilterLink.addEventListener('click', event => {
-    // Checks if was filter selected exists or no
-    if (filters[SENIORITIES_FILTER_NAME].includes(seniorityName)) {
-      filters[SENIORITIES_FILTER_NAME] = arrayRemove(filters[SENIORITIES_FILTER_NAME], seniorityName);
-    } else {
-      filters[SENIORITIES_FILTER_NAME].push(seniorityName);
-    }
-
-    // Generate link with filter params
-    generateParams(filters);
-  });
-});
+addFollowByFilters(cityBoxesList, filters, CITIES_FILTER_NAME);
+addFollowByFilters(seniorityBoxesList, filters, SENIORITIES_FILTER_NAME);
