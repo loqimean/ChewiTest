@@ -1,8 +1,8 @@
 <div class="filter">
   <h6>Seniority name</h6>
-  <div data-controller='show-more-less'>
+  <div data-controller='toggle-menu'>
     <% seniorities.each do |key, filter| %>
-      <div class="form-check seniority_filter_items" data-show-more-less-target='item'>
+      <div class="form-check seniority_filter_items" data-toggle-menu-target='item'>
         <input class="form-check-input" type="checkbox" value="<%= key %>"
                                     id="flexCheckIndeterminate-<%= key %>">
         <label class="form-check-label">
@@ -11,12 +11,12 @@
       </div>
     <% end %>
     <button type="button" name="button"
-            data-action='show-more-less#showLess'
-            data-show-more-less-target='lessControl'
-            class='show-more-less-button'>Show less ↑</button>
+            data-action='toggle-menu#showLess'
+            data-toggle-menu-target='lessControl'
+            class='toggle-menu-button'>Show less ↑</button>
     <button type="button" name="button"
-            data-action='show-more-less#showMore'
-            data-show-more-less-target='moreControl'
-            class='show-more-less-button'>Show more ↓</button>
+            data-action='toggle-menu#showMore'
+            data-toggle-menu-target='moreControl'
+            class='toggle-menu-button'>Show more ↓</button>
   </div>
 </div>
