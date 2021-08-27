@@ -8,9 +8,13 @@ let generateParams = obj => {
   let params = new URLSearchParams(document.location.search);
 
   for (const key in obj) {
-    obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
+    if (obj[key].length > 0) {
+      params.set(key, obj[key]);
+    } else {
+      params.delete(key);
+    }
   }
-  location.search = params.toString();
+  document.location.search = params.toString();
 }
 
 let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
@@ -31,7 +35,7 @@ let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
       }
 
       generateParams(filtersBacket);
-    });
+    }, false);
   });
 }
 
