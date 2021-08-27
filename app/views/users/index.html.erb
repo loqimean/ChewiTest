@@ -9,15 +9,15 @@
       <%= render 'users/seniorities', seniorities: @filters['seniorities'] %>
     </div>
     <div class="col-xl-9">
-      <h1 class="text-center">Users</h1>
+      <h1 class="text-center"><%= t '.header' %></h1>
       <%= form_with url: search_users_path do |form| %>
 
 
        <div class="container my-4">
          <div class="input-group">
-           <%= form.text_field 'query', placeholder: 'Enter search terms...',
+           <%= form.text_field 'query', placeholder: "#{t '.search_placeholder'}...",
                                                 class: 'form-control rounded' %>
-           <%= form.submit 'Search', class: 'btn btn-outline-primary',
+           <%= form.submit t('.search_button'), class: 'btn btn-outline-primary',
                                                 data: { disable_with: false } %>
          </div>
        </div>
