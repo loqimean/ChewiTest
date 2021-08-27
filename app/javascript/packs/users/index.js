@@ -8,11 +8,7 @@ let generateParams = obj => {
   let params = new URLSearchParams(document.location.search);
 
   for (const key in obj) {
-    if (obj[key].length > 0) {
-      params.set(key, obj[key]);
-    } else {
-      params.delete(key);
-    }
+    obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
   }
   document.location.search = params.toString();
 }
