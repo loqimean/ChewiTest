@@ -2,10 +2,13 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
     open() {
+      let backdropDiv = document.createElement('div');
+
       document.body.classList.add("modal-open");
       this.element.setAttribute("style", "display: block;");
       this.element.classList.add("show");
-      document.body.innerHTML += '<div class="modal-backdrop fade show"></div>';
+      backdropDiv.classList.add('modal-backdrop', 'fade', 'show')
+      document.body.append(backdropDiv);
     }
 
     close() {
