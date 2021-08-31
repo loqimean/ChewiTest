@@ -1,0 +1,42 @@
+<div id="app" data-controller='modal-initializer'>
+  <button data-action='click->modal-initializer#launchModal'> Launch modal</button>
+
+  <div class="modal" data-controller='modal' data-modal-initializer-target='modal'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    data-action='click->modal#close'
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="inputName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="inputName">
+            </div>
+            <div class="mb-3">
+              <label for="inputEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="inputSeniority" class="form-label">Seniority</label>
+              <input type="text" class="form-control" id="inputSeniority">
+            </div>
+            <div class="mb-3">
+              <label for="inputCity" class="form-label">City</label>
+              <input type="text" class="form-control" id="inputCity">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="" class="text-danger">Destroy</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
