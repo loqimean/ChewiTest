@@ -42,10 +42,10 @@ en:
       table_column_title_city: 'City'
     seniorities:
       seniority_filter: 'Seniority'
+      show_more_button: 'Show more'
+      show_less_button: 'Show less'
   cities:
     all_cities:
       city_filter: 'City'
-  shared:
-    toggle_menu_buttons:
       show_more_button: 'Show more'
       show_less_button: 'Show less'

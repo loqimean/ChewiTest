@@ -11,10 +11,10 @@ uk:
       table_column_title_city: "Місто"
     seniorities:
       seniority_filter: 'Посада'
+      show_more_button: 'Показати більше'
+      show_less_button: 'Показати менше'
   cities:
     all_cities:
       city_filter: 'Місто'
-  shared:
-    toggle_menu_buttons:
       show_more_button: 'Показати більше'
       show_less_button: 'Показати менше'
