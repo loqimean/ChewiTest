@@ -8,4 +8,6 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
 
   update_index('users') { self }
+
+  accepts_nested_attributes_for :city
 end

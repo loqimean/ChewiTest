@@ -9,10 +9,11 @@
     </div>
     <% users.each do |user| %>
       <div class="row my-1 users-details mb-1">
-        <span class="col-xl-3"><%= user.name %></span>
+        <span class="col-xl-2"><%= user.name %></span>
         <span class="col-xl-3"><%= user.email %></span>
         <span class="col-xl-3"><%= user.seniority %></span>
         <span class="col-xl-3"><%= City.find(user.city_id).name %></span>
+        <span class="col-xl-1"><%= render 'users/modal', user: User.find(user.id) %></span>
       </div>
     <% end %>
   <% else %>
