@@ -1,4 +1,4 @@
-<div id="userListing">
+<div id="usersListing">
   <% if users&.exists? %>
     <div class="row users-header py-2">
       <span class="col-xl-2"><%= t '.table_column_title_name' %></span>
@@ -8,17 +8,13 @@
       <hr class="mt-1 mb-0">
     </div>
     <% users.each do |user| %>
-      <div class="row my-1 users-details mb-1">
-        <span class="col-xl-2"><%= user.name %></span>
-        <span class="col-xl-3"><%= user.email %></span>
-        <span class="col-xl-3"><%= user.seniority %></span>
-        <span class="col-xl-3"><%= City.find(user.city_id).name %></span>
-        <div class="col-xl-1"><%= link_to "Edit", edit_user_path(user.id), data: { "turbo-frame": "modal" } %></div>
-      </div>
+      <%= render 'users/listing_row', user: user %>
     <% end %>
   <% else %>
     <div class="text-center">
-      <div class="col-xl-12 p-5"><span class="fs-6">Hmm.., it's empty 🤔</span></div>
+      <div class="col-xl-12 p-5">
+        <span class="fs-6">Hmm.., it's empty 🤔</span>
+      </div>
     </div>
   <% end %>
 </div>

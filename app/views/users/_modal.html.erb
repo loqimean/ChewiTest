@@ -1,44 +1,53 @@
-<div id="app" data-controller='modal-initializer'>
-  <%= link_to 'See', '#', class: 'text-info', data: { action: 'click->modal-initializer#launchModal' }, remote: true %>
-
-  <div class="modal" data-controller='modal' data-modal-initializer-target='modal'>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update user</h5>
-          <button type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  data-action='click->modal#close'
-                  aria-label="Close"></button>
-        </div>
+<div class="modal show" data-controller='modal' style='display: block;'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= title %></h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                data-action='click->modal#close'
+                aria-label="Close"></button>
+      </div>
+      <div>
         <%= form_for user do |f| %>
           <div class="modal-body">
             <div class="mb-3">
               <%= f.label :name, class: 'form-label' %>
-              <%= f.text_field :name, class: 'form-control' %>
+              <%= f.text_field :name, class: 'form-control', disabled: disabled_status %>
             </div>
             <div class="mb-3">
               <%= f.label :email, class: 'form-label' %>
-              <%= f.text_field :email, class: 'form-control' %>
+              <%= f.text_field :email, class: 'form-control', disabled: disabled_status %>
             </div>
             <div class="mb-3">
               <%= f.label :seniority, class: 'form-label' %>
-              <%= f.text_field :seniority, class: 'form-control' %>
+              <%= f.text_field :seniority, class: 'form-control', disabled: disabled_status %>
             </div>
             <div class="mb-3">
               <%= f.fields_for :city do |c| %>
-                <%= c.label :name, class: 'form-label' %>
-                <%= c.text_field :name, class: 'form-control' %>
+                <%= c.label 'City name', class: 'form-label' %>
+                <%= c.text_field :name, class: 'form-control', disabled: disabled_status %>
               <% end %>
             </div>
           </div>
           <div class="modal-footer">
-            <%= link_to 'Destroy', user,
-                                   method: :delete,
-                                   data: { confirm: 'Are you sure?' },
-                                   class: 'text-danger' %>
-            <%= f.submit 'Submit', class: 'btn btn-primary' %>
+            <% if action == 'edit' %>
+              <%= link_to 'Destroy', user,
+                                     method: :delete,
+                                     data: {
+                                       confirm: 'Are you sure?',
+                                       action: 'click->modal#close'
+                                     },
+                                     class: 'text-danger' %>
+            <% elsif action == 'show' %>
+              <%= link_to 'Edit', edit_user_path(user.id),
+                                  data: { "turbo-frame": "modal" },
+                                  class: 'btn btn-primary text-white' %>
+            <% end %>
+            <% if action == 'edit' || action == 'new' %>
+              <%= f.submit 'Submit', class: 'btn btn-primary', data: { 'action': 'click->modal#close' } %>
+            <% end %>
           </div>
         <% end %>
       </div>

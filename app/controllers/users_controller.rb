@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @city = @user.build_city
   end
 
   # GET /users/1/edit
@@ -27,9 +28,26 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            'usersListing',
+            partial: 'users/listing_row',
+            locals: { user: @user }
+          )
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            :usersListing,
+            partial: 'users/modal',
+            locals: {
+              user: @user,
+              disabled_status: false,
+              action: 'new',
+              title: "Create user"
+            }
+          )
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -39,8 +57,13 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to root_path, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "user-#{@user.id}",
+            partial: 'users/listing_row',
+            locals: { user: @user }
+          )
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -52,8 +75,11 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(
+          "user-#{@user.id}"
+        )
+      end
     end
   end
 
@@ -63,7 +89,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          :userListing,
+          :usersListing,
           partial: 'users/listing',
           locals: { users: @users }
         )

@@ -1,4 +1,11 @@
-<div class="mx-5">
+<div class="mx-5" data-controller='modal'>
+  <%= link_to 'Create user', new_user_path,
+                             class: 'm-2 fixed-bottom btn btn-primary text-white',
+                             id: 'new-user-link',
+                             data: {
+                               'turbo-frame': 'modal',
+                               'action': 'click->modal#open'
+                             } %>
   <p id="notice"><%= notice %></p>
 
   <div class="row">
@@ -24,7 +31,6 @@
       <% end %>
 
       <%= render 'users/listing', users: @users %>
-      <%= link_to "Edit", edit_user_path(id: 5), data: { "turbo-frame": "modal" } %>
     </div>
   </div>
 </div>
