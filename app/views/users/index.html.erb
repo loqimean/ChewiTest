@@ -24,6 +24,7 @@
       <% end %>
 
       <%= render 'users/listing', users: @users %>
+      <%= link_to "Edit", edit_user_path(id: 5), data: { "turbo-frame": "modal" } %>
     </div>
   </div>
 </div>

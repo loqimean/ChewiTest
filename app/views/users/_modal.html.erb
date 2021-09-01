@@ -1,11 +1,11 @@
 <div id="app" data-controller='modal-initializer'>
-  <a href="#" class="text-info" data-action='click->modal-initializer#launchModal'>See</a>
+  <%= link_to 'See', '#', class: 'text-info', data: { action: 'click->modal-initializer#launchModal' }, remote: true %>
 
   <div class="modal" data-controller='modal' data-modal-initializer-target='modal'>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">Update user</h5>
           <button type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"

@@ -1,8 +1,4 @@
-<h1>Editing User</h1>
-
-<%= turbo_frame_tag "user" do %>
-  <%= render 'shared/form', object: @user %>
-
-  <%= link_to 'Show', @user %> |
-  <%= link_to 'Back', users_path, data: { "turbo-frame": "_top" } %>
+<%= turbo_frame_tag "modal" do %>
+  <h3>hello</h3>
+  <%= render 'users/modal', user: @user %>
 <% end %>
