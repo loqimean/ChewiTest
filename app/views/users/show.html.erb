@@ -1,4 +1,3 @@
 <%= turbo_frame_tag "modal" do %>
   <%= render 'users/modal', user: @user, title: 'User info', disabled_status: true, action: params[:action] %>
-  <div class="modal-backdrop fade show"></div>
 <% end %>

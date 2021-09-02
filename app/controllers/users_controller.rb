@@ -38,17 +38,16 @@ class UsersController < ApplicationController
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(
-            :usersListing,
+            :modal,
             partial: 'users/modal',
             locals: {
               user: @user,
               disabled_status: false,
               action: 'new',
-              title: "Create user"
+              title: 'Create user'
             }
           )
         end
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,7 +64,18 @@ class UsersController < ApplicationController
           )
         end
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            :modal,
+            partial: 'users/modal',
+            locals: {
+              user: @user,
+              disabled_status: false,
+              action: 'new',
+              title: "Create user"
+            }
+          )
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

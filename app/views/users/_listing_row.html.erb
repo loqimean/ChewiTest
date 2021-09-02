@@ -3,11 +3,10 @@
   <span class="col-xl-3"><%= user.email %></span>
   <span class="col-xl-3"><%= user.seniority %></span>
   <span class="col-xl-3"><%= City.find(user.city_id).name %></span>
-  <div class="col-xl-1" data-controller='modal'>
+  <div class="col-xl-1">
     <%= link_to 'See', user_path(user.id),
                        data: {
-                         'turbo-frame': 'modal',
-                         'action': 'click->modal#open'
+                         'turbo-frame': 'modal'
                        } %>
   </div>
 </div>
