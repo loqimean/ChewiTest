@@ -5,7 +5,7 @@ const SENIORITIES_FILTER_NAME = 'seniorities';
 let arrayRemove = (arr, value = '') => arr.filter(ele => ele != value);
 
 let generateParams = obj => {
-  let params = new URLSearchParams(document.location.search.substring(1));
+  let params = new URLSearchParams(document.location.search);
 
   for (const key in obj) {
     obj[key].length > 0 ? params.set(key, obj[key]) : params.delete(key);
@@ -15,24 +15,23 @@ let generateParams = obj => {
 
 let addFollowByFilters = (itemBoxesList, filtersBacket, filterName) => {
   itemBoxesList.forEach(itemBox => {
-    let itemFilterLink = itemBox.parentElement;
+    let itemFilterLink = itemBox;
     let itemCheckbox = itemBox.firstElementChild;
     let itemName = itemCheckbox.value;
 
-    // Checks if filters was selected (for saving state after reload page)
-    itemCheckbox.checked = filtersBacket[filterName].includes(itemName);
+    if (itemCheckbox.checked = filtersBacket[filterName].includes(itemName)) {
+      itemFilterLink.parentElement.prepend(itemFilterLink);
+    }
 
     itemFilterLink.addEventListener('click', event => {
-      // Checks if was filter selected exists or no
       if (filtersBacket[filterName].includes(itemName)) {
         filtersBacket[filterName] = arrayRemove(filtersBacket[filterName], itemName);
       } else {
         filtersBacket[filterName].push(itemName);
       }
 
-      // Generate link with filter params
       generateParams(filtersBacket);
-    });
+    }, false);
   });
 }
 
