@@ -11,7 +11,13 @@
   </head>
 
   <body>
-    <%= turbo_frame_tag "modal" %>
+    <div id="myModal" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <%= turbo_frame_tag 'modal'%>
+        </div>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>

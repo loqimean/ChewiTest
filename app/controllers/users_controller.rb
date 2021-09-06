@@ -37,7 +37,7 @@ class UsersController < ApplicationController
         end
       else
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append(
+          render turbo_stream: turbo_stream.replace(
             :modal,
             partial: 'users/modal',
             locals: {
