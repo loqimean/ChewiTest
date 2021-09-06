@@ -99,7 +99,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          :usersListing,
+          :users_listing,
           partial: 'users/listing',
           locals: { users: @users }
         )
