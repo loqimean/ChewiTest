@@ -1,6 +1,8 @@
 import { Controller } from 'stimulus'
 
 const LIMIT_SHOW_VALUE = 5
+const HIDE_ELEMENTS_STATUS = true
+const SHOW_ELEMENTS_STATUS = false
 
 export default class extends Controller {
   static targets = [ "item", "toggleControl" ]
