@@ -30,4 +30,22 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  users:
+    index:
+      header: 'Users'
+      search_button: 'Search'
+      search_placeholder: 'Enter search terms'
+    listing:
+      table_column_title_name: 'Name'
+      table_column_title_email: 'Email'
+      table_column_title_seniority: 'Seniority'
+      table_column_title_city: 'City'
+    seniorities:
+      seniority_filter: 'Seniority'
+      show_more_button: 'Show more'
+      show_less_button: 'Show less'
+  cities:
+    all_cities:
+      city_filter: 'City'
+      show_more_button: 'Show more'
+      show_less_button: 'Show less'

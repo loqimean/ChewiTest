@@ -1,0 +1,20 @@
+uk:
+  users:
+    index:
+      header: 'Користувачі'
+      search_button: 'Пошук'
+      search_placeholder: 'Введіть пошуковий запит'
+    listing:
+      table_column_title_name: "Ім'я"
+      table_column_title_email: "Емейл"
+      table_column_title_seniority: "Посада"
+      table_column_title_city: "Місто"
+    seniorities:
+      seniority_filter: 'Посада'
+      show_more_button: 'Показати більше'
+      show_less_button: 'Показати менше'
+  cities:
+    all_cities:
+      city_filter: 'Місто'
+      show_more_button: 'Показати більше'
+      show_less_button: 'Показати менше'

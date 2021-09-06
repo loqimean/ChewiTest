@@ -1,6 +1,9 @@
 <div class="filter">
-  <h6>Seniority name</h6>
-  <div data-controller='toggle-menu'>
+  <h6><%= t '.seniority_filter' %></h6>
+  <div data-controller='toggle-menu'
+       data-toggle-menu-visibility-value='false'
+       data-toggle-menu-more-button-value="<%= t(".show_more_button") %>"
+       data-toggle-menu-less-button-value="<%= t(".show_less_button") %>">
     <% seniorities.each do |key, filter| %>
       <div class="form-check seniority_filter_items" data-toggle-menu-target='item'>
         <input class="form-check-input" type="checkbox" value="<%= key %>"
@@ -10,13 +13,6 @@
         </label>
       </div>
     <% end %>
-    <button type="button" name="button"
-            data-action='toggle-menu#showLess'
-            data-toggle-menu-target='lessControl'
-            class='toggle-menu-button'>Show less ↑</button>
-    <button type="button" name="button"
-            data-action='toggle-menu#showMore'
-            data-toggle-menu-target='moreControl'
-            class='toggle-menu-button'>Show more ↓</button>
+    <%= render 'shared/toggle_menu_buttons' %>
   </div>
 </div>

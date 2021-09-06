@@ -1,10 +1,10 @@
 <div id="userListing">
   <% if users&.exists? %>
     <div class="row users-header py-2">
-      <span class="col-xl-3">Name</span>
-      <span class="col-xl-3">Email</span>
-      <span class="col-xl-3">Seniority</span>
-      <span class="col-xl-3">City</span>
+      <span class="col-xl-3"><%= t '.table_column_title_name' %></span>
+      <span class="col-xl-3"><%= t '.table_column_title_email' %></span>
+      <span class="col-xl-3"><%= t '.table_column_title_seniority' %></span>
+      <span class="col-xl-3"><%= t '.table_column_title_city' %></span>
       <hr class="mt-1 mb-0">
     </div>
     <% users.each do |user| %>
