@@ -5,6 +5,7 @@
   <span class="col-xl-3"><%= City.find(user.city_id).name %></span>
   <div class="col-xl-1">
     <%= link_to 'See', user_path(user.id),
+                       class: 'users-link',
                        data: {
                          'turbo-frame': 'modal'
                        } %>
