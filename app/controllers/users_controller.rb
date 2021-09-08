@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @city = @user.build_city
   end
 
   # GET /users/1/edit
@@ -27,7 +26,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
+        format.html {
+          redirect_to @user, notice: "User was successfully created."
+        }
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(
             'users_listing',

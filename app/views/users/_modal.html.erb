@@ -14,45 +14,46 @@
     <%= form_for user do |f| %>
       <div class="modal-body">
         <div class="mb-3 position-relative">
-          <% if user.errors[:name] %>
-            <%= f.label :name, class: 'form-label' %>
-            <%= f.text_field :name, class: 'form-control',
-                                    disabled: disabled_status %>
-          <% end %>
-          <span class="error-message">
-            <%= user.errors[:name].first %>
-          </span>
-        </div>
-        <div class="mb-3 position-relative">
-          <% if user.errors[:email] %>
-            <%= f.label :email, class: 'form-label' %>
-            <%= f.text_field :email, class: 'form-control',
-                                     disabled: disabled_status %>
-          <% end %>
-          <span class="error-message">
-            <%= user.errors[:email].first %>
-          </span>
-        </div>
-        <div class="mb-3 position-relative">
-          <% if user.errors[:seniority] %>
-            <%= f.label :seniority, class: 'form-label' %>
-            <%= f.text_field :seniority, class: 'form-control',
-                                         disabled: disabled_status %>
-          <% end %>
-          <span class="error-message">
-            <%= user.errors[:seniority].first %>
-          </span>
-        </div>
-        <div class="mb-3 position-relative">
-          <%= f.fields_for :city do |c| %>
-            <% if user.city.errors[:name] %>
-              <%= c.label 'City name', class: 'form-label' %>
-              <%= c.text_field :name, class: 'form-control',
-                                      disabled: disabled_status %>
-            <% end %>
+          <% if user.errors[:name].any? %>
             <span class="error-message">
-              <%= user.city.errors[:name].first %>
+              <%= user.errors[:name].first %>
             </span>
+          <% end %>
+          <%= f.label :name, class: 'form-label' %>
+          <%= f.text_field :name, class: 'form-control',
+                                  disabled: disabled_status %>
+        </div>
+        <div class="mb-3 position-relative">
+          <% if user.errors[:email].any? %>
+            <span class="error-message">
+              <%= user.errors[:email].first %>
+            </span>
+          <% end %>
+          <%= f.label :email, class: 'form-label' %>
+          <%= f.text_field :email, class: 'form-control',
+                                   disabled: disabled_status %>
+        </div>
+        <div class="mb-3 position-relative">
+          <% if user.errors[:seniority].any? %>
+            <span class="error-message">
+              <%= user.errors[:seniority].first %>
+            </span>
+          <% end %>
+          <%= f.label :seniority, class: 'form-label' %>
+          <%= f.text_field :seniority, class: 'form-control',
+                                       disabled: disabled_status %>
+        </div>
+        <div class="mb-3 position-relative">
+          <%= f.fields_for :city,
+              f.object.new_record? ? f.object.build_city : f.object.city do |c| %>
+            <% if user.city.errors[:name].any? %>
+              <span class="error-message">
+                <%= user.city.errors[:name].first %>
+              </span>
+            <% end %>
+            <%= c.label 'City name', class: 'form-label' %>
+            <%= c.text_field :name, class: 'form-control',
+                                    disabled: disabled_status %>
           <% end %>
         </div>
       </div>
