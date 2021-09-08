@@ -5,18 +5,19 @@ export default class extends Controller {
   static values = { userLink: String };
 
   connect() {
-    let modal = new Modal(document.getElementById('myModal'));
+    this.modal = new Modal(document.getElementById('myModal'));
     let userLink = document.getElementById(`user-link-${this.userLinkValue}`);
 
-    modal.show();
-    console.log(this.userLinkValue);
-    userLink.setAttribute('data-bs-toggle', 'modal');
-    userLink.setAttribute('data-bs-target', '#myModal');
+    this.modal.show();
+    // userLink.setAttribute('data-bs-toggle', 'modal');
+    // userLink.setAttribute('data-bs-target', '#myModal');
+  }
+
+  disconnect() {
+    this.modal.hide();
   }
 
   close() {
-    [...document.getElementsByClassName("modal-backdrop")].forEach(div => {
-      div.remove();
-    });
+    this.element.remove();
   }
 }

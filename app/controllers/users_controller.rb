@@ -30,14 +30,17 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: "User was successfully created." }
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(
-            'usersListing',
+            'users_listing',
             partial: 'users/listing_row',
             locals: { user: @user }
+          ) + turbo_stream.update(
+            :modal,
+            ''
           )
         end
       else
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
+          render turbo_stream: turbo_stream.update(
             :modal,
             partial: 'users/modal',
             locals: {
@@ -61,21 +64,13 @@ class UsersController < ApplicationController
             "user-#{@user.id}",
             partial: 'users/listing_row',
             locals: { user: @user }
+          ) + turbo_stream.update(
+            :modal,
+            ''
           )
         end
       else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            :modal,
-            partial: 'users/modal',
-            locals: {
-              user: @user,
-              disabled_status: false,
-              action: 'new',
-              title: "Create user"
-            }
-          )
-        end
+        format.turbo_stream
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

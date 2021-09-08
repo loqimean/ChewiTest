@@ -2,10 +2,12 @@
      data-modal-user-link-value=<%= user.id ? user.id : 'new' %>>
   <div class="modal-header">
     <h5 class="modal-title"><%= title %></h5>
-    <%= link_to '', users_path, type: 'button',
+    <%= link_to '', user, type: 'button',
             class: 'btn-close',
-            data: { action: 'click->modal#close',
-            'bs-dismiss': 'modal' },
+            data: {
+              'bs-dismiss': 'modal',
+              action: 'click->modal#close'
+            },
             aria: { label: 'Close' } %>
   </div>
   <div>
@@ -55,21 +57,19 @@
         </div>
       </div>
       <div class="modal-footer">
-        <% if action == 'edit' %>
-          <%= link_to 'Destroy', user,
-                                 method: :delete,
-                                 data: {
-                                   confirm: 'Are you sure?',
-                                   action: 'click->modal#close'
-                                 },
-                                 class: 'text-danger' %>
-        <% elsif action == 'show' %>
-          <%= link_to 'Edit', edit_user_path(user.id),
-                              data: {
-                                "turbo-frame": "modal"
-                              },
-                              class: 'btn btn-primary text-white' %>
-        <% end %>
+        <%= link_to_if(action == 'edit', 'Destroy', user,
+                               method: :delete,
+                               data: {
+                                 confirm: 'Are you sure?',
+                                 action: 'click->modal#close'
+                               },
+                               class: 'text-danger') {} %>
+        <%= link_to_if(action == 'show', 'Edit',
+                            { controller: :users,
+                            action: :edit,
+                            id: user.id },
+                            data: { "turbo-frame": "modal" },
+                            class: 'btn btn-primary text-white') {} %>
         <% if action == 'edit' || action == 'new' %>
           <%= f.submit 'Submit', class: 'btn btn-primary',
                                  data: {
