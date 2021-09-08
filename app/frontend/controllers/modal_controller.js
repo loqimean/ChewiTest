@@ -18,6 +18,7 @@ export default class extends Controller {
   }
 
   close() {
+    this.element.closest('turbo-frame[src]').src = '';
     this.element.remove();
   }
 }
