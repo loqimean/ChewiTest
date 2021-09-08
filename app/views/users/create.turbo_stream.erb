@@ -1,5 +1,5 @@
-<%= turbo_stream.replace(
-  "user-#{@user.id}",
+<%= turbo_stream.prepend(
+  :users_listing,
   partial: 'users/listing_row',
   locals: { user: @user }
 ) + turbo_stream.update(

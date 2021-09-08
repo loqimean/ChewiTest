@@ -23,35 +23,14 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    city = City.find_by(name: user_params[:city_attributes][:name])
+    if city then @user.city = city end
 
     respond_to do |format|
       if @user.save
-        format.html {
-          redirect_to @user, notice: "User was successfully created."
-        }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.append(
-            'users_listing',
-            partial: 'users/listing_row',
-            locals: { user: @user }
-          ) + turbo_stream.update(
-            :modal,
-            ''
-          )
-        end
+        format.turbo_stream
       else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.update(
-            :modal,
-            partial: 'users/modal',
-            locals: {
-              user: @user,
-              disabled_status: false,
-              action: 'new',
-              title: 'Create user'
-            }
-          )
-        end
+        format.turbo_stream { render :create_has_errors }
       end
     end
   end
@@ -60,18 +39,9 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "user-#{@user.id}",
-            partial: 'users/listing_row',
-            locals: { user: @user }
-          ) + turbo_stream.update(
-            :modal,
-            ''
-          )
-        end
-      else
         format.turbo_stream
+      else
+        format.turbo_stream { render :update_has_errors }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -81,11 +51,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(
-          "user-#{@user.id}"
-        )
-      end
+      format.turbo_stream
     end
   end
 
@@ -93,13 +59,7 @@ class UsersController < ApplicationController
     @users = collection
 
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          :users_listing,
-          partial: 'users/listing',
-          locals: { users: @users }
-        )
-      end
+      format.turbo_stream
     end
   end
 
