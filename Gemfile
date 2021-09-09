@@ -66,3 +66,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "faker", "~> 2.18"
 
 gem "colorize", "~> 0.8.1"
+
+gem 'simplecov', require: false, group: :test

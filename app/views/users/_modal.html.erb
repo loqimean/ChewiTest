@@ -70,7 +70,7 @@
                             id: user.id },
                             data: { "turbo-frame": "modal" },
                             class: 'btn btn-primary text-white') {} %>
-        <% if action == 'edit' || action == 'new' %>
+        <% if action != 'show' %>
           <%= f.submit 'Submit', class: 'btn btn-primary',
                                  data: {
                                    'turbo-frame': 'modal'
