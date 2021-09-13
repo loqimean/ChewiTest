@@ -4,7 +4,9 @@ import { Modal } from 'bootstrap';
 export default class extends Controller {
 
   connect() {
-    this.modal = new Modal(document.getElementById('myModal'));
+    this.modal = new Modal(document.getElementById('myModal'), {
+      backdrop: 'static'
+    });
 
     this.modal.show();
   }

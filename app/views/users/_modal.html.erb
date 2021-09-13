@@ -45,9 +45,9 @@
         <div class="mb-3 position-relative">
           <%= f.fields_for :city,
               f.object.new_record? ? f.object.build_city : f.object.city do |c| %>
-            <% if user.city.errors[:name].any? %>
+            <% if user.errors['city.name'].any? %>
               <span class="error-message">
-                <%= user.city.errors[:name].first %>
+                <%= user.errors['city.name'].first %>
               </span>
             <% end %>
             <%= c.label 'City name', class: 'form-label' %>

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
+    @filters = filters_collection
     @users = collection
   end
 
@@ -90,5 +90,9 @@ class UsersController < ApplicationController
         filter_cities: parsed_filters_params(search_params[:city_ids]),
         filter_seniorities: parsed_filters_params(search_params[:seniorities])
       ).search
+    end
+
+    def filters_collection
+      ElasticAggregationsSerializer.new(collection.aggregations).to_hash
     end
 end
