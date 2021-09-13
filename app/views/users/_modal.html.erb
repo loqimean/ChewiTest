@@ -73,7 +73,8 @@
         <% if action != 'show' %>
           <%= f.submit 'Submit', class: 'btn btn-primary',
                                  data: {
-                                   'turbo-frame': 'modal'
+                                   'turbo-frame': 'modal',
+                                   action: 'click->modal#afterSubmitClearUrl'
                                 } %>
         <% end %>
       </div>

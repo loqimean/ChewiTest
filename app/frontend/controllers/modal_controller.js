@@ -19,4 +19,9 @@ export default class extends Controller {
     this.element.closest('turbo-frame[src]').src = '';
     this.element.remove();
   }
+
+  afterSubmitClearUrl() {
+    let turboFrame = this.element.closest('turbo-frame[src]');
+    turboFrame.src = turboFrame.src.slice(-1)[0] == '/' ? turboFrame.src : turboFrame.src + '/';
+  }
 }
