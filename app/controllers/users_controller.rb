@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+
     city = City.find_by(name: user_params[:city_attributes][:name])
     if city then @user.city = city end
 

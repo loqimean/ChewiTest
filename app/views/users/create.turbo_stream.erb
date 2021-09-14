@@ -11,6 +11,15 @@
       size: User.where(seniority: @user.seniority).count.to_s
     }
   }
+) + turbo_stream.replace(
+  "city-#{@user.city_id}",
+  partial: 'cities/city_row',
+  locals: {
+    key: @user.city_id,
+    filter: {
+      size: User.where(city_id: @user.city_id).count.to_s
+    }
+  }
 ) + turbo_stream.update(
   :modal,
   ''
