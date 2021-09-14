@@ -2,6 +2,15 @@
   :users_listing,
   partial: 'users/listing_row',
   locals: { user: @user }
+) + turbo_stream.replace(
+  "seniority-#{@user.seniority}",
+  partial: 'users/seniority_row',
+  locals: {
+    key: @user.seniority,
+    filter: {
+      size: User.where(seniority: @user.seniority).count.to_s
+    }
+  }
 ) + turbo_stream.update(
   :modal,
   ''

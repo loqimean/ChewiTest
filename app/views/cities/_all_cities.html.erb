@@ -5,7 +5,7 @@
        data-toggle-menu-more-button-value="<%= t(".show_more_button") %>"
        data-toggle-menu-less-button-value="<%= t(".show_less_button") %>">
     <% cities.each do |key, filter| %>
-      <div class="form-check city_filter_items" data-toggle-menu-target='item'>
+      <div id='city-<%= key %>' class="form-check city_filter_items" data-toggle-menu-target='item'>
         <input class="form-check-input" type="checkbox" value="<%= key %>"
                                     id="flexCheckIndeterminate-<%= key %>">
         <label class="form-check-label">
