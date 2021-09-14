@@ -1,21 +1,15 @@
 <%= turbo_stream.remove(
   "user-#{@user.id}"
 ) + turbo_stream.replace(
-  "seniority-#{@user.seniority}",
-  partial: 'users/seniority_row',
+  'seniorities-filter',
+  partial: 'users/seniorities',
   locals: {
-    key: @user.seniority,
-    filter: {
-      size: User.where(seniority: @user.seniority).count.to_s
-    }
+    seniorities: @filters['seniorities']
   }
 ) + turbo_stream.replace(
-  "city-#{@user.city_id}",
-  partial: 'cities/city_row',
+  'cities-filter',
+  partial: 'cities/all_cities',
   locals: {
-    key: @user.city_id,
-    filter: {
-      size: User.where(city_id: @user.city_id).count.to_s
-    }
+    cities: @filters['cities']
   }
 ) %>

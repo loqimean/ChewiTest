@@ -29,6 +29,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        UsersIndex.sync
+
+        @filters = filters_collection
+
         format.turbo_stream
       else
         format.turbo_stream { render :create_has_errors }
