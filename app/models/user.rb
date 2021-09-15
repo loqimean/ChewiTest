@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  belongs_to :city
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
+  belongs_to :city
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :seniority, presence: true, length: { minimum: 2, maximum: 50 }

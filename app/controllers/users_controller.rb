@@ -23,38 +23,48 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
     city = City.find_by(name: user_params[:city_attributes][:name])
+
     if city then @user.city = city end
 
-    respond_to do |format|
-      if @user.save
-        UsersIndex.sync
+    Chewy.strategy(:urgent) do
+      respond_to do |format|
+        if  @user.save
 
-        @filters = filters_collection
+          @filters = filters_collection
 
-        format.turbo_stream
-      else
-        format.turbo_stream { render :create_has_errors }
+          format.turbo_stream
+        else
+          format.turbo_stream { render :create_has_errors }
+        end
       end
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.turbo_stream
-      else
-        format.turbo_stream { render :update_has_errors }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    Chewy.strategy(:urgent) do
+      respond_to do |format|
+        if @user.update(user_params)
+          @filters = filters_collection
+
+          format.turbo_stream
+        else
+          format.turbo_stream { render :update_has_errors }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy
+    Chewy.strategy(:urgent) do
+      @user.destroy
+    end
+
+    @filters = filters_collection
+
     respond_to do |format|
       format.turbo_stream
     end
