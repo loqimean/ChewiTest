@@ -3,7 +3,7 @@
   partial: 'users/modal',
   locals: {
     user: @user,
-    disabled_status: false,
+    disabled_status: @user.persisted?,
     action: 'new',
     title: 'Create user'
   }

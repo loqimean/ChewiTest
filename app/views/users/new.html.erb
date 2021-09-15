@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'modal' do %>
   <%= render 'users/modal', user: @user,
                             title: 'New User',
-                            disabled_status: false,
+                            disabled_status: @user.persisted?,
                             action: params[:action] %>
 <% end %>
