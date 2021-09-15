@@ -26,3 +26,16 @@
 .users-details {
   font-size: 14px;
 }
+
+#new-user-link {
+  width: 140px;
+}
+
+.error-message {
+  font-size: 10px;
+  position: absolute;
+  bottom: 9%;
+  margin: 0;
+  right: 7%;
+  color: red;
+}

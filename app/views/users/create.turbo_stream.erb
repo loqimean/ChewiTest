@@ -1,0 +1,20 @@
+<%= turbo_stream.append(
+  :users_listing,
+  partial: 'users/listing_row',
+  locals: { user: @user }
+) + turbo_stream.replace(
+  'seniorities-filter',
+  partial: 'users/seniorities',
+  locals: {
+    seniorities: @filters['seniorities']
+  }
+) + turbo_stream.replace(
+  'cities-filter',
+  partial: 'cities/all_cities',
+  locals: {
+    cities: @filters['cities']
+  }
+) + turbo_stream.update(
+  :modal,
+  ''
+) %>

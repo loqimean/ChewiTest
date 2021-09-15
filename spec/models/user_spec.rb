@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:test_city) { City.create!(name: 'Kyiv') }
   let(:test_user) do
-    User.new(name: 'Nikolas', email: 'nik@mail.io', city: test_city)
+    User.new(name: 'Nikolas', email: 'nik@mail.io', seniority: 'Lead', city: test_city)
   end
 
   context 'whith' do
@@ -43,7 +43,10 @@ RSpec.describe User, type: :model do
 
   context 'when email' do
     it 'already been taken' do
-      User.create(name: test_user.name, email: test_user.email, city: test_city)
+      User.create(name: test_user.name,
+                  seniority: test_user.seniority,
+                  email: test_user.email,
+                  city: test_city)
       expect(test_user).not_to be_valid
     end
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersIndex do
   let(:test_city) { City.create!(name: 'Kyiv') }
   let!(:test_user) do
-    User.create!(name: 'John', email: 'jo@mail.io', city: test_city)
+    User.create!(name: 'John', email: 'jo@mail.io', seniority: 'Lead', city: test_city)
   end
   let(:finded_user) do
     described_class.query(query_string: {

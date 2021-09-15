@@ -1,0 +1,7 @@
+<div id='city-<%= key %>' class="form-check city_filter_items" data-toggle-menu-target='item'>
+  <input class="form-check-input" type="checkbox" value="<%= key %>"
+         id="flexCheckIndeterminate-<%= key %>">
+  <label class="form-check-label">
+    <%= City.find(key).name + " (#{filter[:size]})" %>
+  </label>
+</div>

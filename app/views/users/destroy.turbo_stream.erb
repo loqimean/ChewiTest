@@ -1,0 +1,15 @@
+<%= turbo_stream.remove(
+  "user-#{@user.id}"
+) + turbo_stream.replace(
+  'seniorities-filter',
+  partial: 'users/seniorities',
+  locals: {
+    seniorities: @filters['seniorities']
+  }
+) + turbo_stream.replace(
+  'cities-filter',
+  partial: 'cities/all_cities',
+  locals: {
+    cities: @filters['cities']
+  }
+) %>

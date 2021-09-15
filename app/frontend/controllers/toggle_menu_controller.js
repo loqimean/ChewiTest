@@ -16,7 +16,7 @@ export default class extends Controller {
     if (this.itemTargets.length > LIMIT_SHOW_VALUE){
       this.drawItems()
     } else {
-      this.toggleControlTarget.hidden = true
+      this.toggleControlTarget.hidden = HIDE_ELEMENTS_STATUS
     }
   }
 

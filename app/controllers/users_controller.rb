@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @filters = ElasticAggregationsSerializer.new(collection.aggregations).to_hash
+    @filters = filters_collection
     @users = collection
   end
 
@@ -23,37 +23,50 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    city = City.find_by(name: user_params[:city_attributes][:name])
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if city then @user.city = city end
+
+    Chewy.strategy(:urgent) do
+      respond_to do |format|
+        if  @user.save
+
+          @filters = filters_collection
+
+          format.turbo_stream
+        else
+          format.turbo_stream { render :create_has_errors }
+        end
       end
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    Chewy.strategy(:urgent) do
+      respond_to do |format|
+        if @user.update(user_params)
+          @filters = filters_collection
+
+          format.turbo_stream
+        else
+          format.turbo_stream { render :update_has_errors }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy
+    Chewy.strategy(:urgent) do
+      @user.destroy
+    end
+
+    @filters = filters_collection
+
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream
     end
   end
 
@@ -61,13 +74,7 @@ class UsersController < ApplicationController
     @users = collection
 
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          :userListing,
-          partial: 'users/listing',
-          locals: { users: @users }
-        )
-      end
+      format.turbo_stream
     end
   end
 
@@ -80,7 +87,8 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :seniority,
+                                   city_attributes: [:name])
     end
 
     def search_params
@@ -97,5 +105,9 @@ class UsersController < ApplicationController
         filter_cities: parsed_filters_params(search_params[:city_ids]),
         filter_seniorities: parsed_filters_params(search_params[:seniorities])
       ).search
+    end
+
+    def filters_collection
+      ElasticAggregationsSerializer.new(collection.aggregations).to_hash
     end
 end
