@@ -30,7 +30,6 @@ class UsersController < ApplicationController
     Chewy.strategy(:urgent) do
       respond_to do |format|
         if  @user.save
-
           @filters = filters_collection
 
           format.turbo_stream

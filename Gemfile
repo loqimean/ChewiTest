@@ -68,3 +68,5 @@ gem "faker", "~> 2.18"
 gem "colorize", "~> 0.8.1"
 
 gem 'simplecov', require: false, group: :test
+
+gem "dalli", "~> 2.7"
