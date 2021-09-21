@@ -5,6 +5,11 @@ class UsersController < ApplicationController
   def index
     @filters = filters_collection
     @users = collection
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   # GET /users/1 or /users/1.json

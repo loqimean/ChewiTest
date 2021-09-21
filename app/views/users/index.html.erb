@@ -1,10 +1,20 @@
 <div class="mx-5">
-  <%= link_to 'Create user', new_user_path,
-                             class: 'm-2 fixed-bottom btn btn-primary text-white',
-                             id: 'new-user-link',
-                             data: {
-                               'turbo-frame': 'modal'
-                             } %>
+  <div class="row">
+    <div class="col-xl-6">
+      <%= link_to 'Create user', new_user_path,
+                  class: 'm-2 fixed-bottom btn btn-primary text-white',
+                  id: 'new-user-link',
+                  data: {
+                    'turbo-frame': 'modal'
+                  } %>
+    </div>
+    <div class="col-xl-6">
+      <%= link_to 'Export users',
+                  users_path(format: 'xlsx'),
+                  id: 'export-xlsx-link',
+                  class: 'm-2 fixed-bottom btn btn-success text-white' %>
+    </div>
+  </div>
   <p id="notice"><%= notice %></p>
 
   <div class="row">
