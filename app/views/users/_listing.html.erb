@@ -8,7 +8,9 @@
       <hr class="mt-1 mb-0">
     </div>
     <% users.each do |user| %>
-      <%= render 'users/listing_row', user: user %>
+      <%= cache name: user.updated_at + user.id do %>
+        <%= render 'users/listing_row', user: user %>
+      <% end %>
     <% end %>
   <% else %>
     <div class="text-center">
