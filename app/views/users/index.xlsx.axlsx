@@ -1,9 +1,0 @@
-wb = xlsx_package.workbook
-
-wb.add_worksheet(name: 'Users') do |sheet|
-    sheet.add_row %w(id name email seniority)
-
-    @users.each do |user|
-        sheet.add_row [user.id, user.name, user.email, user.seniority]
-    end
-end
