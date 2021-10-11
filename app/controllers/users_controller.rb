@@ -9,6 +9,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx
+      format.xml {
+        @xml_file = XMLTool.new(collection: @users)
+      }
     end
   end
 
