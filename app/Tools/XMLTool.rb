@@ -1,16 +1,16 @@
 class XMLTool
   attr_reader :collection, :keys
 
-  def initialize(args)
-    @collection = args[:collection]
+  def initialize(collection)
+    @collection = collection
   end
 
   def generate_from_collection
     Nokogiri::XML::Builder.new do |xml|
       xml.root do
-        xml.objects do
+        xml.users do
           collection.each do |user|
-            xml.object do
+            xml.user do
               xml.id user.id
               xml.name user.name
               xml.email user.email
