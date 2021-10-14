@@ -9,10 +9,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx
-      format.xml {
+      format.xml do
         @xml_file = XMLTool.new(collection: @users).generate_from_collection
         send_data @xml_file, filename: 'users.xml'
-      }
+      end
     end
   end
 
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
     Chewy.strategy(:urgent) do
       respond_to do |format|
-        if  @user.save
+        if @user.save
           @filters = filters_collection
 
           format.turbo_stream
