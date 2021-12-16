@@ -1,5 +1,5 @@
 class UsersXmlTool
-  attr_reader :collection, :keys
+  attr_reader :collection
 
   def initialize(collection)
     @collection = collection
