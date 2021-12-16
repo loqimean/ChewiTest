@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       format.html
       format.xlsx
       format.xml do
-        @xml_file = XMLTool.new(@users).generate_from_collection
+        @xml_file = UsersXmlTool.new(@users).generate_from_collection
         send_data @xml_file, filename: 'users.xml'
       end
     end

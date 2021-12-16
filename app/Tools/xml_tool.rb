@@ -1,4 +1,4 @@
-class XMLTool
+class UsersXmlTool
   attr_reader :collection, :keys
 
   def initialize(collection)
