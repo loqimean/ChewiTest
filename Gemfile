@@ -37,8 +37,9 @@ gem 'stimulus-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Gem for testing code
+  # Gems for testing code
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'factory_bot_rails', '~> 6.2'
 end
 
 group :development do
