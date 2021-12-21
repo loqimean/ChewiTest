@@ -40,6 +40,7 @@ group :development, :test do
   # Gems for testing code
   gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails', '~> 6.2'
+  gem "faker", "~> 2.18"
 end
 
 group :development do
@@ -59,12 +60,12 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # One line tests
+  gem "shoulda-matchers", "~> 5.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem "faker", "~> 2.18"
 
 gem "colorize", "~> 0.8.1"
 
