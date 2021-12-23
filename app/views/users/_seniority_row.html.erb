@@ -1,0 +1,7 @@
+<div id='seniority-<%= key %>'
+     class="form-check seniority_filter_items"
+     data-toggle-menu-target='item'>
+  <%= check_box_tag key, key, nil, { id: "flexCheckIndeterminate-#{ key }",
+                                                  class: 'form-check-input' } %>
+  <%= label_tag key + " (#{filter[:size]})", nil, class: 'form-check-label' %>
+</div>
