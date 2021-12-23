@@ -11,11 +11,11 @@ RSpec.describe PeopleController, type: :routing do
     end
 
     it "routes to #show" do
-      expect(get: "/people/1").to route_to("people#show", id: "1")
+      expect(get: "/people/test").to route_to("people#show", id: "test")
     end
 
     it "routes to #edit" do
-      expect(get: "/people/1/edit").to route_to("people#edit", id: "1")
+      expect(get: "/people/test/edit").to route_to("people#edit", id: "test")
     end
 
 
@@ -24,15 +24,15 @@ RSpec.describe PeopleController, type: :routing do
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/people/1").to route_to("people#update", id: "1")
+      expect(put: "/people/test").to route_to("people#update", id: "test")
     end
 
     it "routes to #update via PATCH" do
-      expect(patch: "/people/1").to route_to("people#update", id: "1")
+      expect(patch: "/people/test").to route_to("people#update", id: "test")
     end
 
     it "routes to #destroy" do
-      expect(delete: "/people/1").to route_to("people#destroy", id: "1")
+      expect(delete: "/people/test").to route_to("people#destroy", id: "test")
     end
   end
 end
