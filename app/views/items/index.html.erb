@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody id="items">
+    <%= turbo_stream_from :items %>
+    <% @items.each do |item| %>
+      <%= render 'items/item', item: item %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item', new_item_path %>
