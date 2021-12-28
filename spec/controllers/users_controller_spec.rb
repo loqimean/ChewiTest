@@ -1,9 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe UsersController do
+RSpec.describe UsersController, type: :controller do
   render_views
 
   context 'GET #index' do
+    # Check without city for #index
+    let!(:test_city) { create(:city) }
+
     it 'should be success' do
       get :index
 
