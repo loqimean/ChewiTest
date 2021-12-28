@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       format.html
       format.xlsx
       format.xml do
-        @xml_file = XMLTool.new(@users).generate_from_collection
+        @xml_file = UsersXmlTool.new(@users).generate_from_collection
         send_data @xml_file, filename: 'users.xml'
       end
     end
@@ -30,9 +30,8 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    city = City.find_by(name: user_params[:city_attributes][:name])
-
-    if city then @user.city = city end
+    city = City.find_by(name: user_params[:city_attributes][:name]) if user_params[:city_attributes]
+    @user.city = city if city.present?
 
     Chewy.strategy(:urgent) do
       respond_to do |format|
@@ -85,7 +84,6 @@ class UsersController < ApplicationController
   end
 
   private
-
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
