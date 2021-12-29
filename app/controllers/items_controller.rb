@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  protect_from_forgery unless: -> { request.format.json? }
+
   before_action :set_item, only: %i[ show edit update destroy ]
 
   # GET /items or /items.json
