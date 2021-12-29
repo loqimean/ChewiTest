@@ -5,6 +5,8 @@ class Item < ApplicationRecord
   after_update { broadcast_replace_to :items }
   after_destroy { broadcast_remove_to :items }
 
+  validates_presence_of :attachment
+
   before_create :set_file_name
 
   private
