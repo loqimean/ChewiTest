@@ -68,6 +68,20 @@ RSpec.describe "/items", type: :request do
 
         expect(response).to redirect_to(item_url(Item.take))
       end
+
+      context 'with JSON format' do
+        it 'creates a new Item' do
+          expect do
+            post items_url, params: { item: valid_attributes, format: :json }
+          end.to change(Item, :count).by(1)
+        end
+
+        it 'should be created' do
+          post items_url, params: { item: valid_attributes, format: :json }
+
+          expect(response).to be_created
+        end
+      end
     end
 
     context "with invalid parameters" do
@@ -79,7 +93,21 @@ RSpec.describe "/items", type: :request do
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post items_url, params: { item: invalid_attributes }
-        expect(response.status).to eq(422)
+        expect(response).to be_unprocessable
+      end
+
+      context 'with JSON format' do
+        it "does not create a new Item" do
+          expect {
+            post items_url, params: { item: invalid_attributes, format: :json}
+          }.to change(Item, :count).by(0)
+        end
+
+        it 'should be unprocessable' do
+          post items_url, params: { item: invalid_attributes, format: :json}
+
+          expect(response).to be_unprocessable
+        end
       end
     end
   end
@@ -104,13 +132,38 @@ RSpec.describe "/items", type: :request do
         item.reload
         expect(response).to redirect_to(item_url(item))
       end
+
+      context 'with JSON format' do
+        it "updates the requested item" do
+          item = Item.create! valid_attributes
+          expect do
+            patch item_url(item), params: { item: new_attributes, format: :json }
+            item.reload
+          end.to change(item, :updated_at)
+        end
+
+        it "should be successful" do
+          item = Item.create! valid_attributes
+          patch item_url(item), params: { item: new_attributes, format: :json }
+          item.reload
+          expect(response).to be_successful
+        end
+      end
     end
 
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+    context 'with invalid parameters' do
+      it 'should be unprocessable' do
         item = Item.create! valid_attributes
         patch item_url(item), params: { item: invalid_attributes }
-        expect(response.status).to eq(422)
+        expect(response).to be_unprocessable
+      end
+
+      context 'with JSON format' do
+        it 'should be unprocessable' do
+          item = Item.create! valid_attributes
+          patch item_url(item), params: { item: invalid_attributes, format: :json}
+          expect(response).to be_unprocessable
+        end
       end
     end
   end
@@ -127,6 +180,15 @@ RSpec.describe "/items", type: :request do
       item = Item.create! valid_attributes
       delete item_url(item)
       expect(response).to redirect_to(items_url)
+    end
+
+    context 'with JSON format' do
+      it 'destroys the requested item' do
+        item = Item.create! valid_attributes
+        expect {
+          delete item_url(item), params: { format: :json }
+        }.to change(Item, :count).by(-1)
+      end
     end
   end
 end
