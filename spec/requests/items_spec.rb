@@ -16,8 +16,12 @@ RSpec.describe "/items", type: :request do
 
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
+  let!(:valid_test_folder) { Folder.create(name: 'Test') }
   let(:valid_attributes) do
-    { attachment: Rack::Test::UploadedFile.new(File.open("#{Rails.root}/spec/files/test.txt")) }
+    { attachment: Rack::Test::UploadedFile.new(File.open("#{Rails.root}/spec/files/test.txt")), folder_id: valid_test_folder.id }
+  end
+  let(:valid_params) do
+    { attachment: Rack::Test::UploadedFile.new(File.open("#{Rails.root}/spec/files/test.txt")), folder_name: valid_test_folder.name }
   end
 
   let(:invalid_attributes) do
@@ -59,12 +63,12 @@ RSpec.describe "/items", type: :request do
     context "with valid parameters" do
       it "creates a new Item" do
         expect do
-          post items_url, params: { item: valid_attributes }
+          post items_url, params: { item: valid_params }
         end.to change(Item, :count).by(1)
       end
 
       it "redirects to the created item" do
-        post items_url, params: { item: valid_attributes }
+        post items_url, params: { item: valid_params }
 
         expect(response).to redirect_to(item_url(Item.take))
       end
@@ -72,12 +76,12 @@ RSpec.describe "/items", type: :request do
       context 'with JSON format' do
         it 'creates a new Item' do
           expect do
-            post items_url, params: { item: valid_attributes, format: :json }
+            post items_url, params: { item: valid_params, format: :json }
           end.to change(Item, :count).by(1)
         end
 
-        it 'should be created' do
-          post items_url, params: { item: valid_attributes, format: :json }
+        it 'should have response status :created' do
+          post items_url, params: { item: valid_params, format: :json }
 
           expect(response).to be_created
         end
@@ -115,7 +119,7 @@ RSpec.describe "/items", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) do
-        { attachment: Rack::Test::UploadedFile.new(File.open("#{Rails.root}/spec/files/test.txt")) }
+        { attachment: Rack::Test::UploadedFile.new(File.open("#{Rails.root}/spec/files/test.txt")), folder_name: valid_test_folder.name }
       end
 
       it "updates the requested item" do
@@ -136,16 +140,20 @@ RSpec.describe "/items", type: :request do
       context 'with JSON format' do
         it "updates the requested item" do
           item = Item.create! valid_attributes
+
           expect do
             patch item_url(item), params: { item: new_attributes, format: :json }
+
             item.reload
           end.to change(item, :updated_at)
         end
 
-        it "should be successful" do
+        it 'should be successful' do
           item = Item.create! valid_attributes
+
           patch item_url(item), params: { item: new_attributes, format: :json }
           item.reload
+
           expect(response).to be_successful
         end
       end
