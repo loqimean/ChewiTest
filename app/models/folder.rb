@@ -4,4 +4,5 @@ class Folder < ApplicationRecord
   has_many :items, dependent: :destroy
 
   validates_uniqueness_of :name, scope: :folder_id
+  validates_presence_of :name
 end
