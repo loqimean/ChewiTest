@@ -1,13 +1,16 @@
 class Item < ApplicationRecord
   mount_uploader :attachment, AttachmentUploader
 
+  belongs_to :folder
+
+  validates_presence_of :attachment
+  validates_uniqueness_of :file_name, scope: :folder_id
+
+  before_create :set_file_name
+
   after_create { broadcast_append_to :items }
   after_update { broadcast_replace_to :items }
   after_destroy { broadcast_remove_to :items }
-
-  validates_presence_of :attachment
-
-  before_create :set_file_name
 
   private
 
