@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe City, type: :model do
-  let!(:valid_test_item) { Item.create(attachment: File.open("#{Rails.root}/spec/files/test.txt")) }
+RSpec.describe Item, type: :model do
+  let!(:valid_test_folder) { Folder.create(name: 'Test') }
+  let!(:valid_test_item) { Item.create(attachment: File.open("#{Rails.root}/spec/files/test.txt"), folder: valid_test_folder) }
 
   context 'validations' do
     describe 'with validation presence of' do
