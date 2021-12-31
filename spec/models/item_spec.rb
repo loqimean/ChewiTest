@@ -6,14 +6,16 @@ RSpec.describe Item, type: :model do
 
   context 'validations' do
     describe 'with validation presence of' do
-      let(:not_valid_test_item) { Item.new }
+      context 'attachment' do
+        let(:not_valid_test_item) { Item.new }
 
-      it 'should be valid' do
-        expect(valid_test_item).to be_valid
-      end
+        it 'should be valid' do
+          expect(valid_test_item).to be_valid
+        end
 
-      it 'should not be valid without attachment' do
-        expect(not_valid_test_item).not_to be_valid
+        it 'should not be valid without' do
+          expect(not_valid_test_item).not_to be_valid
+        end
       end
     end
   end
