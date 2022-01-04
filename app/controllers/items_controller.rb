@@ -66,9 +66,8 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-      permited_params = params.require(:file).permit(:attachment, :folder_name)
-      folder_id = Folder.find_by_name(permited_params[:folder_name])&.id
+      permited_params = params.require(:file).permit(:file_name, :attachment, :relative_path)
 
-      permited_params.except(:folder_name).merge({ folder_id: folder_id })
+      permited_params.except(:relative_path)
     end
 end
