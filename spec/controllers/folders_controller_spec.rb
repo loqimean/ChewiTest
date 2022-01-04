@@ -1,8 +1,5 @@
 require 'rails_helper'
 
-# we watch by the directory and if we create folder, then send request for it
-# than if we create a file in some folder, then create only file and foun directory
-
 RSpec.describe FoldersController, type: :controller do
   context 'POST #create' do
     context 'when folder is root' do
