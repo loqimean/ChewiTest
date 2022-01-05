@@ -6,4 +6,6 @@ Rails.application.routes.draw do
     end
   end
   root 'users#index'
+
+  post :virtual_drives, to: 'virtual_drives#create'
 end
