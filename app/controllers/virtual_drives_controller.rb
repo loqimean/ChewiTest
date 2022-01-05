@@ -9,7 +9,7 @@ class VirtualDrivesController < ApplicationController
       Folder.find_or_create_folder_by_names(folder_names)
     when 'FILE'
       file_name = path_name.basename.to_s
-      folder_id = Folder.find_or_create_folder_by_names(folder_names - [file_name])
+      folder_id = Folder.find_or_create_folder_by_names(folder_names[0..-2])
 
       Item.create!(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
     end
