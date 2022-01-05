@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration[6.1]
     create_table :items do |t|
       t.string :name
       t.string :attachment
-      t.references :folder, null: false, foreign_key: true
+      t.references :folder, foreign_key: true
 
       t.timestamps
     end

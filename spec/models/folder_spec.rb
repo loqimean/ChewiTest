@@ -8,6 +8,8 @@ RSpec.describe Folder, type: :model do
         second_folder = Folder.create(name: 'b', parent: first_folder)
         third_folder = Folder.create(name: 'c', parent: second_folder)
 
+        expect(first_folder.relative_path).to eq('a')
+        expect(second_folder.relative_path).to eq('a/b')
         expect(third_folder.relative_path).to eq('a/b/c')
       end
     end

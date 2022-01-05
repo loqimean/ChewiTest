@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_085107) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "attachment"
-    t.integer "folder_id", null: false
+    t.integer "folder_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_items_on_folder_id"
