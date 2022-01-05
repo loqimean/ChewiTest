@@ -16,4 +16,21 @@ class Folder < ApplicationRecord
 
     previous_folder_id
   end
+
+  def relative_path
+    array_of_names = [name]
+    previous_folder = self.class.find(folder_id) # may be nil or folder_id may be nil
+
+    if previous_folder.present?
+      loop do
+        array_of_names.push(previous_folder.name)
+
+        break if previous_folder.folder_id.nil?
+
+        previous_folder = self.class.find(previous_folder.folder_id)
+      end
+    end
+
+    array_of_names.reverse.join('/')
+  end
 end
