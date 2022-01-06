@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VirtualDrivesController, type: :controller do
+RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
   describe '#create (POST)' do
     it 'should create' do
       post :create, params: {

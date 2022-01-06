@@ -7,5 +7,9 @@ Rails.application.routes.draw do
   end
   root 'users#index'
 
-  post :virtual_drives, to: 'virtual_drives#create'
+  namespace :api do
+    namespace :v1 do
+      post :virtual_drives, to: 'virtual_drives#create'
+    end
+  end
 end

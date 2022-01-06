@@ -1,4 +1,4 @@
-class VirtualDrivesController < ApplicationController
+class Api::V1::VirtualDrivesController < ApplicationController
   # POST /virtual_drives
   def create
     path_name = Pathname.new(virtual_drive_params[:relative_path])
