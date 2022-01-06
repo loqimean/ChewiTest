@@ -11,7 +11,7 @@ class Api::V1::VirtualDrivesController < ApplicationController
       file_name = path_name.basename.to_s
       folder_id = Folder.find_or_create_folder_by_names(folder_names[0..-2])
 
-      Item.create!(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
+      Item.create(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
     end
   end
 
