@@ -5,7 +5,7 @@ class Api::V1::VirtualDrivesController < ApplicationController
     folder_names = path_name.each_filename.to_a
 
     case virtual_drive_params[:type]
-    when 'FOLDER'
+    when 'DIRECTORY'
       Folder.find_or_create_folder_by_names(folder_names)
     when 'FILE'
       file_name = path_name.basename.to_s
