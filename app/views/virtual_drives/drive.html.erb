@@ -1,0 +1,12 @@
+<div class="container py-3">
+  <%= link_to_if(params[:folder_id].present?, '← Back', drive_path(@folder&.folder_id), class: 'text-decoration-none') {} %>
+  <br>
+
+  <% @folders.each do |folder| %>
+    <%= render 'virtual_drives/folder', folder: folder %>
+  <% end %>
+
+  <% @files.each do |file| %>
+    <%= render 'virtual_drives/file', file: file %>
+  <% end %>
+</div>
