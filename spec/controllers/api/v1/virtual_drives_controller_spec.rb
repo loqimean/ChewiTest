@@ -27,5 +27,14 @@ RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
       expect(file).not_to be_nil
       expect(file.folder).to eq(Folder.find_by_name('e'))
     end
+
+    it 'should be successful' do
+      post :create, params: {
+        type: 'FOLDER',
+        relative_path: 'a/b/c'
+      }
+
+      expect(response).to be_successful
+    end
   end
 end
