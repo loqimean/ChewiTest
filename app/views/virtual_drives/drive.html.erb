@@ -1,6 +1,9 @@
 <div class="container py-3">
-  <%= link_to_if(params[:folder_id].present?, '← Back', drive_path(@folder&.folder_id), class: 'text-decoration-none') {} %>
-  <br>
+  <% if params[:folder_id].present? %>
+    <%= link_to drive_path(@folder&.folder_id) do %>
+      <%= render 'virtual_drives/folder', folder: OpenStruct.new(name: '..') %>
+    <% end %>
+  <% end %>
 
   <% @folders.each do |folder| %>
     <%= render 'virtual_drives/folder', folder: folder %>
