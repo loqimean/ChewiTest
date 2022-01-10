@@ -1,4 +1,6 @@
 class Api::V1::VirtualDrivesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   # POST /virtual_drives
   def create
     path_name = Pathname.new(virtual_drive_params[:relative_path])
