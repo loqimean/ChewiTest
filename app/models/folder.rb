@@ -8,16 +8,28 @@ class Folder < ApplicationRecord
     Item.where(name: folder.name, folder_id: folder.folder_id)
   }
 
-  def self.find_or_create_by_path(folder_names)
+  def self.find_or_create_by_path(path)
+    path = path.split('/') if path.instance_of?(String)
     previous_folder_id = nil
-    folder_names = folder_names.split('/') if folder_names.instance_of?(String)
 
-    folder_names.each do |folder_name|
+    path.each do |folder_name|
       folder = find_or_create_by(name: folder_name, folder_id: previous_folder_id)
       previous_folder_id = folder.id
     end
 
     previous_folder_id
+  end
+
+  def self.find_by_path(path)
+    path = path.split('/') if path.instance_of?(String)
+    previous_folder = OpenStruct.new(id: nil)
+
+    path.each do |folder_name|
+      folder = find_by(name: folder_name, folder_id: previous_folder.id)
+      previous_folder = folder
+    end
+
+    previous_folder
   end
 
   def relative_path
