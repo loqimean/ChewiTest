@@ -1,7 +1,9 @@
 <div class="container py-3">
   <% if params[:folder_id].present? %>
-    <%= link_to drive_path(@folder&.folder_id) do %>
-      <%= render 'virtual_drives/folder', folder: OpenStruct.new(name: '..') %>
+    <%= link_to drive_path(@folder&.folder_id), class: 'text-decoration-none text-dark' do %>
+      <%= image_tag 'icons/folder-mac-icon.ico', width: 40 %>
+      <span>..</span>
+      <br>
     <% end %>
   <% end %>
 
