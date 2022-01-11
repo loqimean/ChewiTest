@@ -21,7 +21,13 @@ class Api::V1::VirtualDrivesController < ApplicationController
   def destroy
     folder = Folder.find_by_path(virtual_drive_params[:relative_path])
 
-    folder.destroy
+    if folder
+      folder.destroy
+
+      render json: { message: 'Successfully destroyed' }, status: :ok
+    else
+      render json: { error: 'Could not find record' }, status: :not_found
+    end
   end
 
   private
