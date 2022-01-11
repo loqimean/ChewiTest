@@ -102,5 +102,24 @@ RSpec.describe Folder, type: :model do
         end
       end
     end
+
+    context ':find_by_path' do
+      it 'should return record by path' do
+        new_folder_id = Folder.find_or_create_by_path('a/b/c')
+        new_folder = Folder.find(new_folder_id)
+        folder = Folder.find_by_path('a/b/c')
+
+        expect(folder).not_to be_nil
+        expect(folder).to eq(new_folder)
+      end
+
+      it 'should return nil if record not exists' do
+        Folder.find_or_create_by_path('a/b/')
+
+        folder = Folder.find_by_path('a/b/c')
+
+        expect(folder).to be_nil
+      end
+    end
   end
 end
