@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post :virtual_drives, to: 'virtual_drives#create'
+      delete :virtual_drives, to: 'virtual_drives#destroy'
     end
   end
 end

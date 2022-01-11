@@ -8,13 +8,20 @@ class Api::V1::VirtualDrivesController < ApplicationController
 
     case virtual_drive_params[:type]
     when 'DIRECTORY'
-      Folder.find_or_create_folder_by_names(folder_names)
+      Folder.find_or_create_by_path(folder_names)
     when 'FILE'
       file_name = path_name.basename.to_s
-      folder_id = Folder.find_or_create_folder_by_names(folder_names[0..-2])
+      folder_id = Folder.find_or_create_by_path(folder_names[0..-2])
 
       Item.create(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
     end
+  end
+
+  # DELETE /virtual_drives
+  def destroy
+    folder = Folder.find_by_path(virtual_drive_params[:relative_path])
+
+    folder.destroy
   end
 
   private
