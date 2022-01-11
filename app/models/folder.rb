@@ -4,10 +4,13 @@ class Folder < ApplicationRecord
   has_many :items, dependent: :destroy
 
   validates :name, presence: true
-  validates_uniqueness_of :name, scope: :folder_id
+  validates_uniqueness_of :name, scope: :folder_id, conditions: ->(folder) {
+    Item.where(name: folder.name, folder_id: folder.folder_id)
+  }
 
   def self.find_or_create_folder_by_names(folder_names)
     previous_folder_id = nil
+    folder_names = folder_names.split('/') if folder_names.instance_of?(String)
 
     folder_names.each do |folder_name|
       folder = find_or_create_by(name: folder_name, folder_id: previous_folder_id)

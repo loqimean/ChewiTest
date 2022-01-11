@@ -4,7 +4,9 @@ class Item < ApplicationRecord
   belongs_to :folder, optional: true
 
   validates :name, :attachment, presence: true
-  validates_uniqueness_of :name, scope: :folder_id
+  validates_uniqueness_of :name, scope: :folder_id, conditions: ->(item) {
+    Folder.where(name: item.name, folder_id: item.folder_id)
+  }
 
   def relative_path
     array_of_names = [name]
