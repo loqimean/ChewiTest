@@ -8,7 +8,7 @@ class Folder < ApplicationRecord
     Item.where(name: folder.name, folder_id: folder.folder_id)
   }
 
-  def self.find_or_create_folder_by_names(folder_names)
+  def self.find_or_create_by_path(folder_names)
     previous_folder_id = nil
     folder_names = folder_names.split('/') if folder_names.instance_of?(String)
 

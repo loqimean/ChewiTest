@@ -57,7 +57,7 @@ RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
 
     context 'when type DIRECTORY' do
       it 'should be successful for folder' do
-        folder_id = Folder.find_or_create_folder_by_names(path_to_folder)
+        folder_id = Folder.find_or_create_by_path(path_to_folder)
 
         delete :destroy, params: { relative_path: 'path/to/folder' }
 
@@ -65,8 +65,8 @@ RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
       end
 
       it 'should remove children' do
-        child_id = Folder.find_or_create_folder_by_names(path_to_folder_with_child)
-        parent_id = Folder.find_or_create_folder_by_names(path_to_folder)
+        child_id = Folder.find_or_create_by_path(path_to_folder_with_child)
+        parent_id = Folder.find_or_create_by_path(path_to_folder)
 
         delete :destroy, params: { relative_path: 'path/to/folder' }
 

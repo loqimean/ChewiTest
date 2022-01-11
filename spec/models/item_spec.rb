@@ -4,7 +4,7 @@ RSpec.describe Item, type: :model do
   describe '#validations' do
     context 'uniqueness of :name' do
       it 'shouldn\'t allow to create when folder with same name exists' do
-        parent_id = Folder.find_or_create_folder_by_names('a/b/c')
+        parent_id = Folder.find_or_create_by_path('a/b/c')
         folder_id = Folder.create(name: 'Gemfile', folder_id: parent_id)
 
         file = Item.new(name: 'Gemfile',

@@ -48,13 +48,13 @@ RSpec.describe Folder, type: :model do
   describe '#validations' do
     context 'uniqueness of :name' do
       it 'shouldn\'t allow to create when file with same name exists' do
-        folder_id = Folder.find_or_create_folder_by_names(path)
+        folder_id = Folder.find_or_create_by_path(path)
 
         Item.create!(name: 'Gemfile',
                      folder_id: folder_id,
                      attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
 
-        expect(Folder.find_or_create_folder_by_names("#{path}/Gemfile")).to be_nil
+        expect(Folder.find_or_create_by_path("#{path}/Gemfile")).to be_nil
       end
     end
   end
@@ -72,10 +72,10 @@ RSpec.describe Folder, type: :model do
       end
     end
 
-    context ':find_or_create_folder_by_names' do
+    context ':find_or_create_by_path' do
       context 'when names is valid' do
         it 'should create folders by paths' do
-          folder_id = Folder.find_or_create_folder_by_names(path)
+          folder_id = Folder.find_or_create_by_path(path)
           folder = Folder.find(folder_id)
 
           expect(folder).to be_present
@@ -84,7 +84,7 @@ RSpec.describe Folder, type: :model do
         end
 
         it 'should return last folder :id' do
-          folder_id = Folder.find_or_create_folder_by_names(path)
+          folder_id = Folder.find_or_create_by_path(path)
 
           expect(folder_id).to be_present
         end
@@ -92,11 +92,11 @@ RSpec.describe Folder, type: :model do
       context 'when names is invalid' do
         it 'should return nil when file with same name exist' do
           # Create parent folder and file
-          folder_id = Folder.find_or_create_folder_by_names(path.split('/')[0..-2])
+          folder_id = Folder.find_or_create_by_path(path.split('/')[0..-2])
           Item.create!(name: path.split('/').last, folder_id: folder_id, attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
 
           # Try to create folder with folder name as has file
-          duplicate_folder_id = Folder.find_or_create_folder_by_names(path)
+          duplicate_folder_id = Folder.find_or_create_by_path(path)
 
           expect(duplicate_folder_id).to be_nil
         end
