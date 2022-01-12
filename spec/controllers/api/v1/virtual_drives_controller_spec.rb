@@ -56,29 +56,29 @@ RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
     let(:path_to_file) { 'path/to/folder/test.txt' }
     let(:file_name) { 'test.txt' }
     let(:path_to_folder_with_child) { 'path/to/folder/child' }
-    let!(:folder_id) { Folder.find_or_create_by_path(path_to_folder) }
+    let!(:folder) { Folder.find_or_create_by_path(path_to_folder) }
 
     context 'when type   DIRECTORY' do
       it 'should be successful for folder' do
         delete :destroy, params: { relative_path: path_to_folder }
 
-        expect(Folder.find_by(id: folder_id)).to be_nil
+        expect(Folder.find_by(id: folder.id)).to be_nil
       end
 
       it 'should remove children' do
-        child_id = Folder.find_or_create_by_path(path_to_folder_with_child)
+        child = Folder.find_or_create_by_path(path_to_folder_with_child)
 
         delete :destroy, params: { relative_path: path_to_folder }
 
-        expect(Folder.find_by(id: folder_id)).to be_nil
-        expect(Folder.find_by(id: child_id)).to be_nil
+        expect(Folder.find_by(id: folder.id)).to be_nil
+        expect(Folder.find_by(id: child.id)).to be_nil
       end
     end
 
     context 'when type FILE' do
       it 'should be successful for folder' do
         file = Item.create(name: 'test.txt',
-                           folder_id: folder_id,
+                           folder: folder,
                            attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
 
         delete :destroy, params: { relative_path: path_to_file }

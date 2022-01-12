@@ -9,54 +9,28 @@ class Folder < ApplicationRecord
   }
 
   def self.find_or_create_by_path(path)
-    path = path.split('/') if path.instance_of?(String)
-    previous_folder_id = nil
+    names = path.split('/')
+    parent_folder = nil
 
-    path.each do |folder_name|
-      folder = find_or_create_by(name: folder_name, folder_id: previous_folder_id)
-      previous_folder_id = folder.id
+    names.each do |name|
+      parent_folder = find_or_create_by(name: name, parent: parent_folder)
     end
 
-    previous_folder_id
-  end
-
-  def self.find_by_path(path)
-    path = path.split('/') if path.instance_of?(String)
-    object_name = path[-1]
-
-    if path.length > 1
-      folder_names = path[0..-2]
-      previous_folder = OpenStruct.new(id: nil)
-
-      folder_names.each do |folder_name|
-        folder = find_by(name: folder_name, folder_id: previous_folder.id)
-        previous_folder = folder
-      end
-
-      folder = previous_folder.children.find_by_name(object_name)
-      files = previous_folder.items
-    else
-      folder = find_by_name(object_name)
-      files = Item
-    end
-
-    return folder unless folder.nil?
-
-    files.find_by_name(object_name)
+    parent_folder
   end
 
   def relative_path
     array_of_names = [name]
 
     if folder_id.present?
-      previous_folder = self.class.find(folder_id)
+      parent_folder = self.class.find(folder_id)
 
       loop do
-        array_of_names.push(previous_folder.name)
+        array_of_names.push(parent_folder.name)
 
-        break if previous_folder.folder_id.nil?
+        break if parent_folder.folder_id.nil?
 
-        previous_folder = self.class.find(previous_folder.folder_id)
+        parent_folder = self.class.find(parent_folder.folder_id)
       end
     end
 

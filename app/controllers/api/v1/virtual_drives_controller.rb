@@ -3,21 +3,19 @@ class Api::V1::VirtualDrivesController < ApplicationController
 
   # POST /virtual_drives
   def create
-    path_name = Pathname.new(virtual_drive_params[:relative_path])
-    folder_names = path_name.each_filename.to_a
-
     case virtual_drive_params[:type]
     when 'DIRECTORY'
-      if Folder.find_or_create_by_path(folder_names)
+      if Folder.find_or_create_by_path(virtual_drive_params[:relative_path])
         render json: { message: 'Folder has been successfuly created' }, status: :created
       else
         render json: { message: 'Something went wrong' }, status: :bad_request
       end
     when 'FILE'
-      file_name = path_name.basename.to_s
-      folder_id = Folder.find_or_create_by_path(folder_names[0..-2])
+      path_name = Pathname.new(virtual_drive_params[:relative_path])
+      *folder_names, file_name = path_name.each_filename.to_a
+      folder = Folder.find_or_create_by_path(folder_names.join('/'))
 
-      item = Item.new(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
+      item = Item.new(name: file_name, folder: folder, attachment: virtual_drive_params[:attachment])
 
       if item.save
         render json: { message: 'File has been successfuly created' }, status: :created
@@ -29,7 +27,7 @@ class Api::V1::VirtualDrivesController < ApplicationController
 
   # DELETE /virtual_drives
   def destroy
-    folder = Folder.find_by_path(virtual_drive_params[:relative_path])
+    folder = FileManager.find_by_path(virtual_drive_params[:relative_path])
 
     if folder
       folder.destroy

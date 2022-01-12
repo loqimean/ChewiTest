@@ -4,11 +4,10 @@ RSpec.describe Item, type: :model do
   describe '#validations' do
     context 'uniqueness of :name' do
       it 'shouldn\'t allow to create when folder with same name exists' do
-        parent_id = Folder.find_or_create_by_path('a/b/c')
-        folder_id = Folder.create(name: 'Gemfile', folder_id: parent_id)
+        folder = Folder.find_or_create_by_path('a/b/c/Gemfile')
 
         file = Item.new(name: 'Gemfile',
-                           folder_id: parent_id,
+                           folder: folder.parent,
                            attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
 
         expect(file.valid?).to be_falsey
