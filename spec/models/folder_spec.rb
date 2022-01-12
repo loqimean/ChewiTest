@@ -105,18 +105,38 @@ RSpec.describe Folder, type: :model do
 
     context ':find_by_path' do
       it 'should return record by path' do
-        new_folder_id = Folder.find_or_create_by_path('a/b/c')
+        new_folder_id = Folder.find_or_create_by_path(path)
         new_folder = Folder.find(new_folder_id)
-        folder = Folder.find_by_path('a/b/c')
+        folder = Folder.find_by_path(path)
 
         expect(folder).not_to be_nil
         expect(folder).to eq(new_folder)
       end
 
+      context 'when returned one' do
+        it 'DIRECTORY should return record' do
+          Folder.find_or_create_by_path('a')
+
+          found = Folder.find_by_path('a')
+
+          expect(found.name).to eq('a')
+          expect(found.class).to eq(described_class)
+        end
+
+        it 'FILE should return record' do
+          Item.create(name: 'a', attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
+
+          found = Folder.find_by_path('a')
+
+          expect(found.name).to eq('a')
+          expect(found.class).to eq(Item)
+        end
+      end
+
       it 'should return nil if record not exists' do
         Folder.find_or_create_by_path('a/b/')
 
-        folder = Folder.find_by_path('a/b/c')
+        folder = Folder.find_by_path(path)
 
         expect(folder).to be_nil
       end
