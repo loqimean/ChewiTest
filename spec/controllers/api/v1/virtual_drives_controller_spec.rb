@@ -53,25 +53,37 @@ RSpec.describe Api::V1::VirtualDrivesController, type: :controller do
 
   describe '#destroy (DELETE)' do
     let(:path_to_folder) { 'path/to/folder' }
+    let(:path_to_file) { 'path/to/folder/test.txt' }
+    let(:file_name) { 'test.txt' }
     let(:path_to_folder_with_child) { 'path/to/folder/child' }
+    let!(:folder_id) { Folder.find_or_create_by_path(path_to_folder) }
 
-    context 'when type DIRECTORY' do
+    context 'when type   DIRECTORY' do
       it 'should be successful for folder' do
-        folder_id = Folder.find_or_create_by_path(path_to_folder)
-
-        delete :destroy, params: { relative_path: 'path/to/folder' }
+        delete :destroy, params: { relative_path: path_to_folder }
 
         expect(Folder.find_by(id: folder_id)).to be_nil
       end
 
       it 'should remove children' do
         child_id = Folder.find_or_create_by_path(path_to_folder_with_child)
-        parent_id = Folder.find_or_create_by_path(path_to_folder)
 
-        delete :destroy, params: { relative_path: 'path/to/folder' }
+        delete :destroy, params: { relative_path: path_to_folder }
 
-        expect(Folder.find_by(id: parent_id)).to be_nil
+        expect(Folder.find_by(id: folder_id)).to be_nil
         expect(Folder.find_by(id: child_id)).to be_nil
+      end
+    end
+
+    context 'when type FILE' do
+      it 'should be successful for folder' do
+        file = Item.create(name: 'test.txt',
+                           folder_id: folder_id,
+                           attachment: Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/test.txt"))
+
+        delete :destroy, params: { relative_path: path_to_file }
+
+        expect(Item.find_by(id: file.id)).to be_nil
       end
     end
   end
