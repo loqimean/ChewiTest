@@ -22,14 +22,27 @@ class Folder < ApplicationRecord
 
   def self.find_by_path(path)
     path = path.split('/') if path.instance_of?(String)
-    previous_folder = OpenStruct.new(id: nil)
+    object_name = path[-1]
 
-    path.each do |folder_name|
-      folder = find_by(name: folder_name, folder_id: previous_folder.id)
-      previous_folder = folder
+    if path.length > 1
+      folder_names = path[0..-2]
+      previous_folder = OpenStruct.new(id: nil)
+
+      folder_names.each do |folder_name|
+        folder = find_by(name: folder_name, folder_id: previous_folder.id)
+        previous_folder = folder
+      end
+
+      folder = previous_folder.children.find_by_name(object_name)
+      files = previous_folder.items
+    else
+      folder = find_by_name(object_name)
+      files = Item
     end
 
-    previous_folder
+    return folder unless folder.nil?
+
+    files.find_by_name(object_name)
   end
 
   def relative_path
