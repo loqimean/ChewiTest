@@ -8,12 +8,22 @@ class Api::V1::VirtualDrivesController < ApplicationController
 
     case virtual_drive_params[:type]
     when 'DIRECTORY'
-      Folder.find_or_create_by_path(folder_names)
+      if Folder.find_or_create_by_path(folder_names)
+        render json: { message: 'Folder has been successfuly created' }, status: :created
+      else
+        render json: { message: 'Something went wrong' }, status: :bad_request
+      end
     when 'FILE'
       file_name = path_name.basename.to_s
       folder_id = Folder.find_or_create_by_path(folder_names[0..-2])
 
-      Item.create(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
+      item = Item.new(name: file_name, folder_id: folder_id, attachment: virtual_drive_params[:attachment])
+
+      if item.save
+        render json: { message: 'File has been successfuly created' }, status: :created
+      else
+        render json: { message: 'Something went wrong' }, status: :bad_request
+      end
     end
   end
 
