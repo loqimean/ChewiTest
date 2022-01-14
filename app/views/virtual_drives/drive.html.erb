@@ -6,12 +6,17 @@
       <br>
     <% end %>
   <% end %>
+  <div id='folders'>
+    <%= turbo_stream_from :folders %>
+    <% @folders.each do |folder| %>
+      <%= render 'virtual_drives/folder', folder: folder %>
+    <% end %>
+  </div>
 
-  <% @folders.each do |folder| %>
-    <%= render 'virtual_drives/folder', folder: folder %>
-  <% end %>
-
-  <% @files.each do |file| %>
-    <%= render 'virtual_drives/file', file: file %>
-  <% end %>
+  <div id='items'>
+    <%= turbo_stream_from :items %>
+    <% @files.each do |file| %>
+      <%= render 'virtual_drives/item', item: file %>
+    <% end %>
+  </div>
 </div>

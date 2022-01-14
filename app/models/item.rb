@@ -8,6 +8,10 @@ class Item < ApplicationRecord
     Folder.where(name: item.name, folder_id: item.folder_id)
   }
 
+  after_create { broadcast_append_to :items, partial: 'virtual_drives/item' }
+  after_update { broadcast_replace_to :items, partial: 'virtual_drives/item' }
+  after_destroy { broadcast_remove_to :items }
+
   def relative_path
     array_of_names = [name]
 
