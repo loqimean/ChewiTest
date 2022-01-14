@@ -4,12 +4,23 @@ RSpec.describe FileManager do
   let(:path) { 'a/b/c' }
 
   context ':find_by_path' do
-    it 'should return record by path' do
-      new_folder = Folder.find_or_create_by_path(path)
-      folder = described_class.find_by_path(path)
+    context 'when the path is passed like' do
+      it 'a string' do
+        new_folder = Folder.find_or_create_by_path(path)
+        folder = described_class.find_by_path(path)
 
-      expect(folder).not_to be_nil
-      expect(folder).to eq(new_folder)
+        expect(folder).not_to be_nil
+        expect(folder).to eq(new_folder)
+      end
+
+      it 'an array of names' do
+        array_of_names = path.split('/')
+        new_folder = Folder.find_or_create_by_path(path)
+        folder = described_class.find_by_path(array_of_names)
+
+        expect(folder).not_to be_nil
+        expect(folder).to eq(new_folder)
+      end
     end
 
     context 'when returned one' do

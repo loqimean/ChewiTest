@@ -90,6 +90,18 @@ RSpec.describe Folder, type: :model do
           expect(folder).to be_present
         end
       end
+
+      context 'when the path is passed like' do
+        it 'an array of names' do
+          array_of_names = path.split('/')
+          folder = Folder.find_or_create_by_path(array_of_names)
+
+          expect(folder).to be_present
+          expect(folder.parent.name).to eq('b')
+          expect(folder.relative_path).to eq(path)
+        end
+      end
+
       context 'when names is invalid' do
         it 'should return nil when file with same name exist' do
           # Create parent folder and file

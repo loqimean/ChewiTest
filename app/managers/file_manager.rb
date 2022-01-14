@@ -1,6 +1,6 @@
 class FileManager
   def self.find_by_path(path)
-    names = path.split('/')
+    names = path.instance_of?(String) ? path.split('/') : path
     object_name = names.pop
     parent_folder = nil
 

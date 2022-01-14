@@ -9,7 +9,7 @@ class Folder < ApplicationRecord
   }
 
   def self.find_or_create_by_path(path)
-    names = path.split('/')
+    names = path.instance_of?(String) ? path.split('/') : path
     parent_folder = nil
 
     names.each do |name|
