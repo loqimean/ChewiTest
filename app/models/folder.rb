@@ -8,6 +8,10 @@ class Folder < ApplicationRecord
     Item.where(name: folder.name, folder_id: folder.folder_id)
   }
 
+  after_create { broadcast_append_to :folders, partial: 'virtual_drives/folder' }
+  after_update { broadcast_replace_to :folders, partial: 'virtual_drives/folder' }
+  after_destroy { broadcast_remove_to :folders }
+
   def self.find_or_create_by_path(path)
     names = path.instance_of?(String) ? path.split('/') : path
     parent_folder = nil
