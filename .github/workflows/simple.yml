@@ -12,5 +12,5 @@ jobs:
       - name: Show ruby version
         run: |
           ruby -v
-          gem install railties
+          sudo gem install railties
           rails -v
