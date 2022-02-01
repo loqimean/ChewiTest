@@ -1,0 +1,10 @@
+name: test workflow
+
+on: push
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: say hello
+        run: echo 'hello!)'
