@@ -8,3 +8,6 @@ jobs:
     steps:
       - name: say hello
         run: echo 'hello!)'
+
+      - name: Show ruby version
+        run: ruby -v
