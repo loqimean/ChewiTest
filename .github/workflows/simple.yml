@@ -10,4 +10,6 @@ jobs:
         run: echo 'hello!)'
 
       - name: Show ruby version
-        run: ruby -v
+        run: |
+          ruby -v
+          rails -v
