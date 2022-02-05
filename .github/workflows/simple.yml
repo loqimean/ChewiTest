@@ -20,7 +20,7 @@ jobs:
       - name: Check ruby version
         run: |
           ruby -v
-          echo "${job.services.elasticsearch.ports[9200]}"
+          echo job.services.elasticsearch.ports[9200]
       - name: Install Bundler
         run: |
           gem install bundler
