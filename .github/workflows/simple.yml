@@ -1,16 +1,25 @@
-name: test workflow
-
-on: push
-
+name: RSpec
+on:
+  push:
 jobs:
-  run-shell-command:
+  testing:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     steps:
-      - name: say hello
-        run: echo 'hello!)'
-
-      - name: Show ruby version
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+      - name: Check ruby version
+        run: ruby -v
+      - name: Install Bundler
         run: |
-          ruby -v
-          sudo gem install railties
-          rails -v
+          gem install bundler
+      - name: Run Bundle
+        run: bundle install
+      - name: List all files
+        run: ls
+      - name: Run rspec
+        run: bundle exec rspec
+
