@@ -37,8 +37,8 @@ jobs:
           gem install bundler
       - name: Run Bundle
         run: bundle install
-      - name: Setup DB
-        run: rake db:setup
+      - name: Run Webpacker
+        run: rake assets:precompile
       - name: List all files
         run: ls
       - name: Run rspec
