@@ -16,8 +16,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.2
-      - name: Setup DB
-        run: rake db:setup
       - name: Configure sysctl limits
         run: |
           sudo swapoff -a
@@ -39,6 +37,8 @@ jobs:
           gem install bundler
       - name: Run Bundle
         run: bundle install
+      - name: Setup DB
+        run: rake db:setup
       - name: List all files
         run: ls
       - name: Run rspec
