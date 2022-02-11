@@ -27,14 +27,6 @@ jobs:
           stack-version: 7.6.0
       - name: Check if ES is running
         run: curl localhost:9200
-      - name: Check ruby version
-        run: |
-          ruby -v
-      - name: Install Bundler
-        run: |
-          gem install bundler
-      - name: Run Bundle
-        run: bundle install
       - name: Run Webpacker
         run: rake assets:precompile
       - name: List all files
