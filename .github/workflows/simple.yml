@@ -11,6 +11,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.2
+          bundler-cache: true
+          cache-version: 1
       - name: Configure sysctl limits
         run: |
           sudo swapoff -a
