@@ -28,7 +28,9 @@ jobs:
       - name: Check if ES is running
         run: curl localhost:9200
       - name: Run Webpacker
-        run: rake assets:precompile
+        run: |
+          bundle exec
+          rake assets:precompile
       - name: List all files
         run: ls
       - name: Run rspec
