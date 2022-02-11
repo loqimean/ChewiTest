@@ -29,8 +29,7 @@ jobs:
         run: curl localhost:9200
       - name: Run Webpacker
         run: |
-          bundle exec
-          rake assets:precompile
+          bundle exec rake assets:precompile
       - name: List all files
         run: ls
       - name: Run rspec
