@@ -1,0 +1,17 @@
+<div class="container py-3">
+  <% if params[:folder_id].present? %>
+    <%= link_to drive_path(@folder&.folder_id), class: 'text-decoration-none text-dark' do %>
+      <%= image_tag 'icons/folder-mac-icon.ico', width: 40 %>
+      <span>..</span>
+      <br>
+    <% end %>
+  <% end %>
+
+  <% @folders.each do |folder| %>
+    <%= render 'virtual_drives/folder', folder: folder %>
+  <% end %>
+
+  <% @files.each do |file| %>
+    <%= render 'virtual_drives/file', file: file %>
+  <% end %>
+</div>

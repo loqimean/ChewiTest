@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  root 'users#index'
+
+  get '/drive/(:folder_id)', to: 'virtual_drives#drive', as: :drive
+
   resources :cities
   resources :users do
     collection do
       post :search, to: "users#search"
     end
   end
-  root 'users#index'
+
+  namespace :api do
+    namespace :v1 do
+      post :virtual_drives, to: 'virtual_drives#create'
+      delete :virtual_drives, to: 'virtual_drives#destroy'
+    end
+  end
 end

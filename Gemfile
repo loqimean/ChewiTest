@@ -70,3 +70,5 @@ gem "colorize", "~> 0.8.1"
 gem 'simplecov', require: false, group: :test
 
 gem "dalli", "~> 2.7"
+
+gem "carrierwave", "~> 2.2"
