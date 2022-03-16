@@ -1,68 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:test_city) { City.create!(name: 'Kyiv') }
-  let(:test_user) do
-    User.new(name: 'Nikolas', email: 'nik@mail.io', seniority: 'Lead', city: test_city)
+  let(:test_city) { create(:city) }
+  let(:test_user) { build(:user, city: test_city) }
+
+  describe '#associations' do
+    it { should belong_to(:city) }
   end
 
-  context 'whith' do
-    it 'valid attributes' do
-      expect(test_user).to be_valid
-    end
-  end
+  describe '#validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:seniority) }
+    it { should validate_presence_of(:email) }
 
-  context 'when name' do
-    it 'length too short' do
-      test_user.name = 'q'
-      expect(test_user).not_to be_valid
-    end
+    it { should validate_length_of(:name).is_at_least(2).is_at_most(50) }
+    it { should validate_length_of(:seniority).is_at_least(2).is_at_most(50) }
+    it { should validate_length_of(:email).is_at_least(5).is_at_most(255) }
 
-    it 'length too long' do
-      test_user.name = 'q' * 51
-      expect(test_user).not_to be_valid
-    end
-  end
+    it { should validate_uniqueness_of(:email).case_insensitive }
 
-  context 'without presence' do
-    it 'name not valid' do
-      test_user.name = nil
-      expect(test_user).not_to be_valid
-    end
-
-    it 'email not valid' do
-      test_user.email = nil
-      expect(test_user).not_to be_valid
-    end
-
-    it 'city not valid' do
-      test_user.city = nil
-      expect(test_user).not_to be_valid
-    end
-  end
-
-  context 'when email' do
-    it 'already been taken' do
-      User.create(name: test_user.name,
-                  seniority: test_user.seniority,
-                  email: test_user.email,
-                  city: test_city)
-      expect(test_user).not_to be_valid
-    end
-
-    it 'length too long' do
-      test_user.name = 'q' * 256
-      expect(test_user).not_to be_valid
-    end
-
-    it 'length too short' do
-      test_user.email = 'q' * 4
-      expect(test_user).not_to be_valid
-    end
-
-    it 'has incorrect format' do
-      test_user.email = 'test'
-      expect(test_user).not_to be_valid
-    end
+    it { should allow_value('test@mail.io').for(:email) }
+    it { should_not allow_value('testmailio').for(:email) }
   end
 end

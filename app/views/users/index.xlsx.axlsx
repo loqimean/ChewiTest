@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+
+wb.styles do |style|
+  bold = style.add_style b: true
+
+  wb.add_worksheet(name: 'Users') do |sheet|
+    sheet.add_row [ 'ID', 'Name', 'Email', 'Seniority' ], style: bold
+
+    @users.each do |user|
+      sheet.add_row [ user.id, user.name, user.email, user.seniority ]
+    end
+  end
+end
