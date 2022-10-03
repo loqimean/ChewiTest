@@ -37,8 +37,10 @@ gem 'stimulus-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Gem for testing code
+  # Gems for testing code
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'factory_bot_rails', '~> 6.2'
+  gem "faker", "~> 2.18"
 end
 
 group :development do
@@ -58,15 +60,23 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # One line tests
+  gem "shoulda-matchers", "~> 5.0"
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem "faker", "~> 2.18"
 
 gem "colorize", "~> 0.8.1"
 
 gem 'simplecov', require: false, group: :test
 
 gem "dalli", "~> 2.7"
+
+gem "rubyzip", "~> 2.3"
+
+gem "axlsx", "~> 1.3"
+gem "axlsx_rails", "~> 0.6.1"
+
+gem "nokogiri", "~> 1.12"

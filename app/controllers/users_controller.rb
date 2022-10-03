@@ -5,11 +5,19 @@ class UsersController < ApplicationController
   def index
     @filters = filters_collection
     @users = collection
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+      format.xml do
+        @xml_file = UsersXmlTool.new(@users).generate_from_collection
+        send_data @xml_file, filename: 'users.xml'
+      end
+    end
   end
 
   # GET /users/1 or /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -17,19 +25,17 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    city = City.find_by(name: user_params[:city_attributes][:name])
-
-    if city then @user.city = city end
+    city = City.find_by(name: user_params[:city_attributes][:name]) if user_params[:city_attributes]
+    @user.city = city if city.present?
 
     Chewy.strategy(:urgent) do
       respond_to do |format|
-        if  @user.save
+        if @user.save
           @filters = filters_collection
 
           format.turbo_stream
@@ -78,7 +84,6 @@ class UsersController < ApplicationController
   end
 
   private
-
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
